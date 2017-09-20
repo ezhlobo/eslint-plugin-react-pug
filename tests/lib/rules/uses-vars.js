@@ -2,7 +2,6 @@
  * @fileoverview Prevent variables used in JSX to be marked as unused
  * @author Eugene Zhlobo
  */
-"use strict";
 
 //------------------------------------------------------------------------------
 // Requirements
@@ -11,7 +10,8 @@
 const eslint = require('eslint')
 const ruleNoUnusedVars = require('eslint/lib/rules/no-unused-vars')
 const rulePreferConst = require('eslint/lib/rules/prefer-const')
-const RuleTester = eslint.RuleTester
+
+const { RuleTester } = eslint
 
 const rule = require('../../../lib/rules/uses-vars')
 
@@ -59,7 +59,7 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
 
         pug\`div\`
       `,
-      errors: [{ message: '\'text\' is defined but never used.' }]
+      errors: [{ message: '\'text\' is defined but never used.' }],
     },
     {
       code: `
@@ -68,7 +68,7 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
 
         pug\`Component\`
       `,
-      errors: [{ message: '\'Child\' is defined but never used.' }]
+      errors: [{ message: '\'Child\' is defined but never used.' }],
     },
     {
       code: `
@@ -78,7 +78,7 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
 
         pug\`Component.Nested Plain text\`
       `,
-      errors: [{ message: '\'Nested\' is defined but never used.' }]
+      errors: [{ message: '\'Nested\' is defined but never used.' }],
     },
     {
       code: `
@@ -134,4 +134,4 @@ ruleTester.run('rule "uses-vars" (prefer-const)', rulePreferConst, {
       errors: [{ message: '\'filters\' is never reassigned. Use \'const\' instead.' }],
     },
   ],
-});
+})

@@ -2,12 +2,13 @@
  * @fileoverview Add supporting of pugjs with react
  * @author
  */
-"use strict";
 
+/* eslint-disable global-require */
 const allRules = {
   'uses-react': require('./lib/rules/uses-react'),
   'uses-vars': require('./lib/rules/uses-vars'),
 }
+/* eslint-enable */
 
 module.exports = {
   rules: allRules,
