@@ -37,7 +37,7 @@ Then configure the rules you want to use under the rules section.
 ```json
 {
     "extends": [
-        "plugin:react/all"
+        "plugin:react-pug/all"
     ]
 }
 ```
