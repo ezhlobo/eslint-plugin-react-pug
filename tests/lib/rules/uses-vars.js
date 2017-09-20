@@ -47,7 +47,7 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
         /* eslint uses-vars: 1 */
         var Component, Child;
 
-        pug\`Component: Child\`
+        pug\`Component(boolean): Child\`
       `,
     },
   ],
