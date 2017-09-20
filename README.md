@@ -1,4 +1,4 @@
-# eslint-plugin-react-pug
+# eslint-plugin-react-pug [![circleci](https://circleci.com/gh/ezhlobo/eslint-plugin-react-pug/tree/master.svg)](https://circleci.com/gh/ezhlobo/eslint-plugin-react-pug/tree/master)
 
 Add supporting of pugjs with react.
 
