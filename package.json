@@ -1,21 +1,25 @@
 {
   "name": "eslint-plugin-react-pug",
   "version": "0.0.0",
+  "author": "Eugene Zhlobo <ezhlobo@gmail.com>",
   "description": "Add supporting of pugjs with react",
-  "keywords": [
-    "eslint",
-    "eslintplugin",
-    "eslint-plugin",
-    "pug",
-    "pugjs",
-    "react"
-  ],
-  "author": "",
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./",
     "test": "mocha tests --recursive"
   },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.js",
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ezhlobo/eslint-plugin-react-pug"
+  },
+  "homepage": "https://github.com/ezhlobo/eslint-plugin-react-pug",
+  "bugs": "https://github.com/ezhlobo/eslint-plugin-react-pug/issues",
   "dependencies": {
     "pug-uses-variables": "^0.0.2"
   },
@@ -30,5 +34,14 @@
       "./eslintrc.js"
     ]
   },
-  "license": "ISC"
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin",
+    "pug",
+    "pugjs",
+    "react",
+    "babel"
+  ],
+  "license": "MIT"
 }
