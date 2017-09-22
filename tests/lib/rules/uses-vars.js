@@ -50,6 +50,22 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
         pug\`Component(boolean): Child\`
       `,
     },
+    {
+      code: `
+        /* eslint uses-vars: 1 */
+        export default () => {
+          const arg = ''
+          const scopeFunction = () => () => {}
+
+          return pug\`
+            button(
+              onClick=scopeFunction(arg)
+            )
+              | Scope Function
+          \`
+        }
+      `,
+    },
   ],
   invalid: [
     {
