@@ -66,6 +66,14 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
         }
       `,
     },
+    {
+      code: `
+        /* eslint uses-vars: 1 */
+        export const Field = props => pug\`
+          Item(...props)
+        \`
+      `,
+    },
   ],
   invalid: [
     {
