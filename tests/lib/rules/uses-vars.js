@@ -74,6 +74,27 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
         \`
       `,
     },
+    {
+      code: `
+        /* eslint uses-vars: 1 */
+        const string = 'string'
+        const nested = 'nested'
+        const array = [1, 2]
+        const arrayNested = 'arrayNested'
+
+        pug\`
+          div
+            \${string}
+
+            \${pug\`div= nested\`}
+
+            \${array.map(number => pug\`
+              div(key=number)
+                p= arrayNested
+            \`)}
+        \`
+      `,
+    },
   ],
   invalid: [
     {
