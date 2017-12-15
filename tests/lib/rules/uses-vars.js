@@ -95,6 +95,16 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
         \`
       `,
     },
+    {
+      code: `
+        /* eslint uses-vars: 1 */
+        const variable = 'variable'
+        pug\`
+          p.
+            Big text with #{variable} interpolation
+        \`
+      `,
+    },
   ],
   invalid: [
     {
@@ -152,6 +162,41 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
       `,
       errors: [{
         message: '\'Hello\' is defined but never used.',
+        line: 3,
+      }],
+    },
+    {
+      code: `
+        /* eslint uses-vars: 1 */
+        const item = true
+        const variable = true
+        pug\`
+          each item, key in collection
+            = item
+            = key
+            = variable
+        \`
+      `,
+      errors: [{
+        message: '\'item\' is assigned a value but never used.',
+        line: 3,
+      }],
+    },
+    {
+      code: `
+        /* eslint uses-vars: 1 */
+        const variable = true
+        const usedVariable = true
+        pug\`
+          div
+            - const variable = true
+            div
+              = variable
+              = usedVariable
+        \`
+      `,
+      errors: [{
+        message: '\'variable\' is assigned a value but never used.',
         line: 3,
       }],
     },
