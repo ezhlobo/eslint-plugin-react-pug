@@ -1,5 +1,7 @@
 # eslint-plugin-react-pug [![circleci](https://circleci.com/gh/ezhlobo/eslint-plugin-react-pug/tree/master.svg)](https://circleci.com/gh/ezhlobo/eslint-plugin-react-pug/tree/master)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ezhlobo/eslint-plugin-react-pug.svg)](https://greenkeeper.io/)
+
 Add supporting of pugjs with react.
 
 It adds supporting of [babel-plugin-transform-react-pug](https://github.com/pugjs/babel-plugin-transform-react-pug).
