@@ -6,6 +6,15 @@ Add supporting of pugjs with react.
 
 It adds supporting of [babel-plugin-transform-react-pug](https://github.com/pugjs/babel-plugin-transform-react-pug).
 
+## Table of Contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+* [Supported Rules](#supported-rules)
+  * [`react-pug/no-undef`](#react-pugno-undef)
+  * [`react-pug/uses-react`](#react-puguses-react)
+  * [`react-pug/uses-vars`](#react-puguses-vars)
+
 ## Installation
 
 You'll first need to install [ESLint](http://eslint.org):
