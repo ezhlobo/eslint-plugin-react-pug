@@ -46,10 +46,32 @@ Then configure the rules you want to use under the rules section.
 
 ## Supported Rules
 
-* ### `react-pug/uses-react` 
+* ### `react-pug/no-undef`
+
+  Disallow undeclared variables in Pug
+
+  #### Rule details
+
+  The following patterns are considered warnings:
+  ```js
+  pug`Hello(name="John")`
+  ```
+
+  The following patterns are not considered warnings:
+  ```js
+  var Hello = require('./Hello')
+
+  pug`Hello(name="John")`
+  ```
+
+  #### When Not To Use It
+
+  If you are not using Pug then you can disable this rule.
+
+* ### `react-pug/uses-react`
 
   Prevent React to be incorrectly marked as unused
-  
+
   #### Rule Details
 
   The following patterns are considered warnings:
@@ -58,22 +80,22 @@ Then configure the rules you want to use under the rules section.
 
   // nothing to do with React
   ```
-  
+
   The following patterns are not considered warnings:
   ```js
   var React = require('react');
 
   var Hello = pug`h1 Hello`;
   ```
-  
+
   #### When Not To Use It
-  
+
   If you are not using pug, if React is declared as global variable or if you do not use the no-unused-vars rule then you can disable this rule.
 
 * ### `react-pug/uses-vars`
 
   Prevent variables used in pugjs to be incorrectly marked as unused
-  
+
   #### Rule Details
 
   The following patterns are considered warnings:
@@ -87,7 +109,7 @@ Then configure the rules you want to use under the rules section.
 
   pug`Hello(name="John")`;
   ```
-  
+
   #### When Not To Use It
-  
+
   If you are not using pug or if you do not use the no-unused-vars rule then you can disable this rule.
