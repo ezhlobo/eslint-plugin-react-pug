@@ -46,70 +46,70 @@ Then configure the rules you want to use under the rules section.
 
 ## Supported Rules
 
-* ### `react-pug/no-undef`
+### `react-pug/no-undef`
 
-  Disallow undeclared variables in Pug
+Disallow undeclared variables in Pug
 
-  #### Rule details
+#### Rule details
 
-  The following patterns are considered warnings:
-  ```js
-  pug`Hello(name="John")`
-  ```
+The following patterns are considered warnings:
+```js
+pug`Hello(name="John")`
+```
 
-  The following patterns are not considered warnings:
-  ```js
-  var Hello = require('./Hello')
+The following patterns are not considered warnings:
+```js
+var Hello = require('./Hello')
 
-  pug`Hello(name="John")`
-  ```
+pug`Hello(name="John")`
+```
 
-  #### When Not To Use It
+#### When Not To Use It
 
-  If you are not using Pug then you can disable this rule.
+If you are not using Pug then you can disable this rule.
 
-* ### `react-pug/uses-react`
+### `react-pug/uses-react`
 
-  Prevent React to be incorrectly marked as unused
+Prevent React to be incorrectly marked as unused
 
-  #### Rule Details
+#### Rule Details
 
-  The following patterns are considered warnings:
-  ```js
-  var React = require('react');
+The following patterns are considered warnings:
+```js
+var React = require('react')
 
-  // nothing to do with React
-  ```
+// nothing to do with React
+```
 
-  The following patterns are not considered warnings:
-  ```js
-  var React = require('react');
+The following patterns are not considered warnings:
+```js
+var React = require('react')
 
-  var Hello = pug`h1 Hello`;
-  ```
+var Hello = pug`h1 Hello`
+```
 
-  #### When Not To Use It
+#### When Not To Use It
 
-  If you are not using pug, if React is declared as global variable or if you do not use the no-unused-vars rule then you can disable this rule.
+If you are not using pug, if React is declared as global variable or if you do not use the no-unused-vars rule then you can disable this rule.
 
-* ### `react-pug/uses-vars`
+### `react-pug/uses-vars`
 
-  Prevent variables used in pugjs to be incorrectly marked as unused
+Prevent variables used in pugjs to be incorrectly marked as unused
 
-  #### Rule Details
+#### Rule Details
 
-  The following patterns are considered warnings:
-  ```js
-  var Hello = require('./Hello');
-  ```
+The following patterns are considered warnings:
+```js
+var Hello = require('./Hello')
+```
 
-  The following patterns are not considered warnings:
-  ```js
-  var Hello = require('./Hello');
+The following patterns are not considered warnings:
+```js
+var Hello = require('./Hello')
 
-  pug`Hello(name="John")`;
-  ```
+pug`Hello(name="John")`
+```
 
-  #### When Not To Use It
+#### When Not To Use It
 
-  If you are not using pug or if you do not use the no-unused-vars rule then you can disable this rule.
+If you are not using pug or if you do not use the no-unused-vars rule then you can disable this rule.
