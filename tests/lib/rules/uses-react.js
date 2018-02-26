@@ -1,5 +1,5 @@
 /**
- * @fileoverview Prevent React to be marked as unused
+ * @fileoverview Tests for uses-react
  * @author Eugene Zhlobo
  */
 

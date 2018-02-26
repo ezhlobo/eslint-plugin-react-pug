@@ -1,5 +1,5 @@
 /**
- * @fileoverview Prevent variables used in JSX to be marked as unused
+ * @fileoverview Tests for uses-vars
  * @author Eugene Zhlobo
  */
 
