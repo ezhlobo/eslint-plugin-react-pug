@@ -48,6 +48,18 @@ ruleTester.run('rule "no-undef"', rule, {
         \`
       `,
     },
+    {
+      code: `/*global pug*//*eslint no-undef:1*/
+        pug\`
+          each upValue, upKey in ['a', 'b']
+            each downValue, downKey in ['a', 'b']
+              = downValue
+              = downKey
+              = upValue
+              = upKey
+        \`
+      `,
+    },
   ],
   invalid: [
     {
@@ -73,6 +85,20 @@ ruleTester.run('rule "no-undef"', rule, {
       `,
       errors: [{
         message: '\'variable\' is not defined.',
+      }],
+    },
+    {
+      code: `/*global pug*//*eslint no-undef:1*/
+        pug\`
+          each upValue, upKey in ['a', 'b']
+          = upValue
+          = upKey
+        \`
+      `,
+      errors: [{
+        message: '\'upValue\' is not defined.',
+      }, {
+        message: '\'upKey\' is not defined.',
       }],
     },
   ],
