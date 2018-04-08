@@ -11,6 +11,7 @@ It adds supporting of [babel-plugin-transform-react-pug](https://github.com/pugj
 * [Installation](#installation)
 * [Usage](#usage)
 * [Supported Rules](#supported-rules)
+  * [`react-pug/no-broken-template`](#react-pugno-broken-template)
   * [`react-pug/no-undef`](#react-pugno-undef)
   * [`react-pug/uses-react`](#react-puguses-react)
   * [`react-pug/uses-vars`](#react-puguses-vars)
@@ -54,6 +55,26 @@ Then configure the rules you want to use under the rules section.
 ```
 
 ## Supported Rules
+
+### `react-pug/no-broken-template`
+
+Disallow broken templates
+
+#### Rule details
+
+The following patterns are considered warnings:
+```js
+pug`each item in 1, 2]`
+```
+
+The following patterns are not considered warnings:
+```js
+pug`each item in [1, 2]`
+```
+
+#### When Not To Use It
+
+If you are not using Pug then you can disable this rule.
 
 ### `react-pug/no-undef`
 
