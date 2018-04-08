@@ -21,7 +21,7 @@
   "homepage": "https://github.com/ezhlobo/eslint-plugin-react-pug",
   "bugs": "https://github.com/ezhlobo/eslint-plugin-react-pug/issues",
   "dependencies": {
-    "pug-uses-variables": "^1.0.0"
+    "pug-uses-variables": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^4.16.0",
