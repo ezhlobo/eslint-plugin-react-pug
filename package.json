@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-react-pug",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Eugene Zhlobo <ezhlobo@gmail.com>",
   "description": "Add supporting of pugjs with react",
   "main": "index.js",
