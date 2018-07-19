@@ -35,6 +35,18 @@ ruleTester.run('rule "no-broken-template"', rule, {
           )
       \``,
     },
+    {
+      // eslint-disable-next-line no-template-curly-in-string
+      code: 'pug`div(className=${variable})`',
+    },
+    {
+      code: `
+        pug\`
+          div(className=\${false ? 'one' : 'two'})
+          div(className=\${true})
+        \`
+      `,
+    },
   ],
   invalid: [
     {
