@@ -118,6 +118,14 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
         \`
       `,
     },
+    {
+      code: `
+        /* eslint uses-vars: 1 */
+        pug\`
+          div(data-test=\${false ? 'one' : 'two'})
+        \`
+      `,
+    },
   ],
   invalid: [
     {

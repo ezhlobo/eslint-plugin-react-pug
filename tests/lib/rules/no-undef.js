@@ -60,6 +60,13 @@ ruleTester.run('rule "no-undef"', rule, {
         \`
       `,
     },
+    {
+      code: `/*global pug*//*eslint no-undef:1*/
+        pug\`
+          div(data-test=\${false ? 'one' : 'two'})
+        \`
+      `,
+    },
   ],
   invalid: [
     {
