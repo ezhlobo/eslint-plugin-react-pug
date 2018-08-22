@@ -10,11 +10,7 @@ It adds supporting of [babel-plugin-transform-react-pug](https://github.com/pugj
 
 * [Installation](#installation)
 * [Usage](#usage)
-* [Supported Rules](#supported-rules)
-  * [`react-pug/no-broken-template`](#react-pugno-broken-template)
-  * [`react-pug/no-undef`](#react-pugno-undef)
-  * [`react-pug/uses-react`](#react-puguses-react)
-  * [`react-pug/uses-vars`](#react-puguses-vars)
+* [List of supported rules](#list-of-supported-rules)
 
 ## Installation
 
@@ -54,92 +50,10 @@ Then configure the rules you want to use under the rules section.
 }
 ```
 
-## Supported Rules
+## List of supported rules
 
-### `react-pug/no-broken-template`
-
-Disallow broken templates
-
-#### Rule details
-
-The following patterns are considered warnings:
-```js
-pug`each item in 1, 2]`
-```
-
-The following patterns are not considered warnings:
-```js
-pug`each item in [1, 2]`
-```
-
-#### When Not To Use It
-
-If you are not using Pug then you can disable this rule.
-
-### `react-pug/no-undef`
-
-Disallow undeclared variables in Pug
-
-#### Rule details
-
-The following patterns are considered warnings:
-```js
-pug`Hello(name="John")`
-```
-
-The following patterns are not considered warnings:
-```js
-var Hello = require('./Hello')
-
-pug`Hello(name="John")`
-```
-
-#### When Not To Use It
-
-If you are not using Pug then you can disable this rule.
-
-### `react-pug/uses-react`
-
-Prevent React to be incorrectly marked as unused
-
-#### Rule Details
-
-The following patterns are considered warnings:
-```js
-var React = require('react')
-
-// nothing to do with React
-```
-
-The following patterns are not considered warnings:
-```js
-var React = require('react')
-
-var Hello = pug`h1 Hello`
-```
-
-#### When Not To Use It
-
-If you are not using pug, if React is declared as global variable or if you do not use the no-unused-vars rule then you can disable this rule.
-
-### `react-pug/uses-vars`
-
-Prevent variables used in pugjs to be incorrectly marked as unused
-
-#### Rule Details
-
-The following patterns are considered warnings:
-```js
-var Hello = require('./Hello')
-```
-
-The following patterns are not considered warnings:
-```js
-var Hello = require('./Hello')
-
-pug`Hello(name="John")`
-```
-
-#### When Not To Use It
-
-If you are not using pug or if you do not use the no-unused-vars rule then you can disable this rule.
+* [`react-pug/no-broken-template`](./docs/rules/no-broken-template.md): Disallow broken template
+* [`react-pug/no-undef`](./docs/rules/no-undef.md): Disallow undeclared variables in Pug
+* [`react-pug/quotes`](./docs/rules/quotes.md): Manage quotes in Pug
+* [`react-pug/uses-react`](./docs/rules/uses-react.md): Prevent React to be marked as unused
+* [`react-pug/uses-vars`](./docs/rules/uses-vars.md): Prevent variables used in Pug to be marked as unused
