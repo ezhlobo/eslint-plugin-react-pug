@@ -73,12 +73,20 @@ ruleTester.run('rule "no-undef"', rule, {
       code: '/*global pug*//*eslint no-undef:1*/ pug`App`;',
       errors: [{
         message: '\'App\' is not defined.',
+        line: 1,
+        column: 41,
+        endLine: 1,
+        endColumn: 44,
       }],
     },
     {
       code: '/*global pug*//*eslint no-undef:1*/ pug`= app`;',
       errors: [{
         message: '\'app\' is not defined.',
+        line: 1,
+        column: 43,
+        endLine: 1,
+        endColumn: 46,
       }],
     },
     {
@@ -92,6 +100,10 @@ ruleTester.run('rule "no-undef"', rule, {
       `,
       errors: [{
         message: '\'variable\' is not defined.',
+        line: 6,
+        column: 15,
+        endLine: 6,
+        endColumn: 23,
       }],
     },
     {
@@ -104,8 +116,16 @@ ruleTester.run('rule "no-undef"', rule, {
       `,
       errors: [{
         message: '\'upValue\' is not defined.',
+        line: 4,
+        column: 13,
+        endLine: 4,
+        endColumn: 20,
       }, {
         message: '\'upKey\' is not defined.',
+        line: 5,
+        column: 13,
+        endLine: 5,
+        endColumn: 18,
       }],
     },
   ],
