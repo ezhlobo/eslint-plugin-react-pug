@@ -40,7 +40,13 @@ ruleTester.run('rule "uses-react"', ruleNoUnusedVars, {
   invalid: [
     {
       code: '/*eslint uses-react:1*/ var React;',
-      errors: [{ message: '\'React\' is defined but never used.' }],
+      errors: [{
+        message: '\'React\' is defined but never used.',
+        line: 1,
+        column: 29,
+        endLine: 1,
+        endColumn: 34,
+      }],
     },
   ],
 })

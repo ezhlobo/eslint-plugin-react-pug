@@ -135,7 +135,13 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
 
         pug\`div\`
       `,
-      errors: [{ message: '\'text\' is defined but never used.' }],
+      errors: [{
+        message: '\'text\' is defined but never used.',
+        line: 3,
+        column: 13,
+        endLine: 3,
+        endColumn: 17,
+      }],
     },
     {
       code: `
@@ -144,7 +150,13 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
 
         pug\`Component\`
       `,
-      errors: [{ message: '\'Child\' is defined but never used.' }],
+      errors: [{
+        message: '\'Child\' is defined but never used.',
+        line: 3,
+        column: 24,
+        endLine: 3,
+        endColumn: 29,
+      }],
     },
     {
       code: `
@@ -154,7 +166,13 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
 
         pug\`Component.Nested Plain text\`
       `,
-      errors: [{ message: '\'Nested\' is defined but never used.' }],
+      errors: [{
+        message: '\'Nested\' is defined but never used.',
+        line: 4,
+        column: 13,
+        endLine: 4,
+        endColumn: 19,
+      }],
     },
     {
       code: `
@@ -169,6 +187,9 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
       errors: [{
         message: '\'HelloMessage\' is defined but never used.',
         line: 3,
+        column: 15,
+        endLine: 3,
+        endColumn: 27,
       }],
     },
     {
@@ -184,6 +205,9 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
       errors: [{
         message: '\'Hello\' is defined but never used.',
         line: 3,
+        column: 17,
+        endLine: 3,
+        endColumn: 22,
       }],
     },
     {
@@ -201,6 +225,9 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
       errors: [{
         message: '\'item\' is assigned a value but never used.',
         line: 3,
+        column: 15,
+        endLine: 3,
+        endColumn: 19,
       }],
     },
     {
@@ -219,6 +246,9 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
       errors: [{
         message: '\'variable\' is assigned a value but never used.',
         line: 3,
+        column: 15,
+        endLine: 3,
+        endColumn: 23,
       }],
     },
   ],
