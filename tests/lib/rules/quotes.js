@@ -27,8 +27,6 @@ const parserOptions = {
 
 const ruleTester = new RuleTester({ parserOptions })
 
-process.stdout.write('\033c\033[3J')
-
 const MESSAGE_PLAIN = 'Strings must use double quotes'
 const MESSAGE_CODE = 'Code must use single quotes'
 
@@ -152,7 +150,7 @@ ruleTester.run('rule "quotes"', rule, {
         column: 37,
         endLine: 3,
         endColumn: 42,
-      }]
+      }],
     },
     {
       code: `
