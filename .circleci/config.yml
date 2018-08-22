@@ -8,17 +8,24 @@ jobs:
 
     steps:
       - checkout
+
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
+            - yarn-packages-{{ checksum "yarn.lock" }}
+
+      - run: yarn global add greenkeeper-lockfile
 
       - run: yarn install
 
       - save_cache:
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - node_modules
+            - ~/.cache/yarn
+
+      - run: ~/.yarn/bin/greenkeeper-lockfile-update
 
       - run: yarn lint
-      - run: yarn test
+
+      - run: yarn test --recursive
+
+      - run: ~/.yarn/bin/greenkeeper-lockfile-upload
