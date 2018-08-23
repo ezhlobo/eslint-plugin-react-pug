@@ -28,35 +28,84 @@ const MESSAGE = 'Don\'t use JavaScript interpolation'
 ruleTester.run('rule "no-interpolation"', rule, {
   valid: [
     { code: 'pug`div #{test}`' },
+    { code: 'pug`div= test`' },
+    { code: 'pug`div(attr=test)`' },
+    { code: 'pug`div(attr=one + two)`' },
   ],
   invalid: [
     {
       code: `
         pug\`
-          div \${ long_variable + something_else }
-          each item in \${ items }
-            p= item
-            p \${third}
+          div \${example} \${example}
         \`
       `,
       errors: [{
         message: MESSAGE,
         line: 3,
-        column: 11,
+        column: 15,
         endLine: 3,
-        endColumn: 51,
+        endColumn: 25,
       }, {
         message: MESSAGE,
-        line: 4,
-        column: 11,
-        endLine: 4,
-        endColumn: 35,
-      }, {
+        line: 3,
+        column: 26,
+        endLine: 3,
+        endColumn: 36,
+      }],
+    },
+    {
+      code: `
+        pug\`
+          div before \${example} after
+        \`
+      `,
+      errors: [{
         message: MESSAGE,
-        line: 6,
-        column: 13,
-        endLine: 6,
-        endColumn: 24,
+        line: 3,
+        column: 22,
+        endLine: 3,
+        endColumn: 32,
+      }],
+    },
+    {
+      code: `
+        pug\`
+          div before \${  long_variable  +  something_else  } after
+        \`
+      `,
+      errors: [{
+        message: MESSAGE,
+        line: 3,
+        column: 22,
+        endLine: 3,
+        endColumn: 61,
+      }],
+    },
+    {
+      code: `
+        pug\`
+          each item in \${ items }
+            p= items
+        \`
+      `,
+      errors: [{
+        message: MESSAGE,
+        line: 3,
+        column: 24,
+        endLine: 3,
+        endColumn: 34,
+      }],
+    },
+    {
+      code: `
+        pug\`div= \${ example }\`
+      `,
+      errors: [{
+        message: MESSAGE,
+        line: 2,
+        column: 18,
+        endLine: 2,
+        endColumn: 30,
       }],
     },
   ],
