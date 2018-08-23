@@ -17,9 +17,6 @@ const rule = require('../../../lib/rules/uses-react')
 const parserOptions = {
   ecmaVersion: 8,
   sourceType: 'module',
-  ecmaFeatures: {
-    experimentalObjectRestSpread: true,
-  },
 }
 
 //------------------------------------------------------------------------------

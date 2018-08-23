@@ -18,9 +18,6 @@ const rule = require('../../../lib/rules/uses-vars')
 const parserOptions = {
   ecmaVersion: 8,
   sourceType: 'module',
-  ecmaFeatures: {
-    experimentalObjectRestSpread: true,
-  },
 }
 
 //------------------------------------------------------------------------------
