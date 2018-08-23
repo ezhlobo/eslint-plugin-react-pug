@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-react-pug",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Add supporting of pugjs with react",
   "repository": "ezhlobo/eslint-plugin-react-pug",
   "license": "MIT",
