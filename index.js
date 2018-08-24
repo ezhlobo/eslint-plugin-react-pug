@@ -4,6 +4,7 @@
 
 /* eslint-disable global-require */
 const allRules = {
+  indent: require('./lib/rules/indent'),
   'no-broken-template': require('./lib/rules/no-broken-template'),
   'no-interpolation': require('./lib/rules/no-interpolation'),
   'no-undef': require('./lib/rules/no-undef'),
@@ -21,6 +22,7 @@ module.exports = {
         pug: true,
       },
       rules: {
+        'react-pug/indent': 2,
         'react-pug/no-broken-template': 2,
         'react-pug/no-undef': 2,
         'react-pug/no-interpolation': 2,
