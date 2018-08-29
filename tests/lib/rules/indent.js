@@ -41,6 +41,32 @@ ruleTester.run('rule "indent"', rule, {
         \`
       `,
     },
+    {
+      code: `
+        const example = pug\`
+          div
+            div: div
+        \`
+      `,
+    },
+    {
+      code: `
+        export default () => pug\`
+          div
+            div: div
+        \`
+      `,
+    },
+    {
+      code: `
+        export default () => {
+          return pug\`
+            div
+              div: div
+          \`
+        }
+      `,
+    },
   ],
   invalid: [
     {
@@ -160,6 +186,29 @@ test
         column: 1,
         endLine: 4,
         endColumn: 17,
+      }],
+    },
+    {
+      code: `
+        function asd() {
+          const result = pug\`
+             div
+               div
+          \`
+        }
+      `,
+      errors: [{
+        line: 4,
+        column: 1,
+        endLine: 4,
+        endColumn: 14,
+        message: buildMessage(12, 13),
+      }, {
+        line: 5,
+        column: 1,
+        endLine: 5,
+        endColumn: 16,
+        message: buildMessage(14, 15),
       }],
     },
   ],
