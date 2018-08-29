@@ -8,6 +8,16 @@ const ruleFiles = fs.readdirSync(path.resolve(__dirname, '..', 'lib', 'rules'))
   .map(file => path.basename(file, '.js'))
 
 describe('each rule', () => {
+  describe('has documentation', () => {
+    ruleFiles.forEach((ruleName) => {
+      it(ruleName, () => {
+        const filepath = path.resolve(__dirname, '..', 'docs', 'rules', `${ruleName}.md`)
+
+        assert(fs.existsSync(filepath), 'No related file')
+      })
+    })
+  })
+
   describe('has url to documentation', () => {
     ruleFiles.forEach((ruleName) => {
       it(ruleName, () => {
@@ -35,7 +45,7 @@ describe('each rule', () => {
         const isPresented = listOfRulesInReadme
           .find(item => checker.test(item))
 
-        assert(isPresented)
+        assert(isPresented, 'Does not mentioned')
       })
     })
   })
