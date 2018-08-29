@@ -109,5 +109,19 @@ ruleTester.run('rule "no-broken-template"', rule, {
         message: 'Pug can\'t parse this template',
       }],
     },
+    {
+      code: `pug\`
+        div
+          div
+         div
+      \``,
+      errors: [{
+        line: 4,
+        column: 10,
+        endLine: 4,
+        endColumn: 13,
+        message: 'Pug can\'t parse this template',
+      }],
+    },
   ],
 })
