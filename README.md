@@ -52,6 +52,7 @@ Then configure the rules you want to use under the rules section.
 
 ## List of supported rules
 
+* [`react-pug/empty-lines`](./docs/rules/empty-lines.md): Manage empty lines in Pug
 * [`react-pug/indent`](./docs/rules/indent.md): Enforce consistent indentation
 * [`react-pug/no-broken-template`](./docs/rules/no-broken-template.md): Disallow broken template
 * [`react-pug/no-interpolation`](./docs/rules/no-interpolation.md): Disallow JavaScript interpolation
