@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 const eslint = require('eslint')
+const buildError = require('../../../lib/util/testBuildError')
 
 const { RuleTester } = eslint
 
@@ -57,13 +58,9 @@ ruleTester.run('rule "no-broken-template"', rule, {
             each i in 1, 2, 3]
         \`;
       `,
-      errors: [{
-        line: 5,
-        column: 13,
-        endLine: 5,
-        endColumn: 31,
-        message: 'Pug can\'t parse this template',
-      }],
+      errors: [
+        buildError([5, 13], [5, 31], 'Pug can\'t parse this template'),
+      ],
     },
     {
       code: `
@@ -73,13 +70,9 @@ ruleTester.run('rule "no-broken-template"', rule, {
             each i in [1, 2, 3
         \`;
       `,
-      errors: [{
-        line: 5,
-        column: 13,
-        endLine: 5,
-        endColumn: 31,
-        message: 'Pug can\'t parse this template',
-      }],
+      errors: [
+        buildError([5, 13], [5, 31], 'Pug can\'t parse this template'),
+      ],
     },
     {
       code: `pug\`
@@ -87,13 +80,9 @@ ruleTester.run('rule "no-broken-template"', rule, {
           iam-object= a: 1, b: 2 }
         )
       \`;`,
-      errors: [{
-        line: 3,
-        column: 11,
-        endLine: 3,
-        endColumn: 35,
-        message: 'Pug can\'t parse this template',
-      }],
+      errors: [
+        buildError([3, 11], [3, 35], 'Pug can\'t parse this template'),
+      ],
     },
     {
       code: `pug\`
@@ -101,13 +90,9 @@ ruleTester.run('rule "no-broken-template"', rule, {
           iam-object={ a: 1, b: 2
         )
       \`;`,
-      errors: [{
-        line: 4,
-        column: 9,
-        endLine: 4,
-        endColumn: 10,
-        message: 'Pug can\'t parse this template',
-      }],
+      errors: [
+        buildError([4, 9], [4, 10], 'Pug can\'t parse this template'),
+      ],
     },
     {
       code: `pug\`
@@ -115,13 +100,9 @@ ruleTester.run('rule "no-broken-template"', rule, {
           div
          div
       \``,
-      errors: [{
-        line: 4,
-        column: 10,
-        endLine: 4,
-        endColumn: 13,
-        message: 'Pug can\'t parse this template',
-      }],
+      errors: [
+        buildError([4, 10], [4, 13], 'Pug can\'t parse this template'),
+      ],
     },
   ],
 })

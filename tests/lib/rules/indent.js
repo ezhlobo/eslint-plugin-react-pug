@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 const eslint = require('eslint')
+const buildError = require('../../../lib/util/testBuildError')
 
 const { RuleTester } = eslint
 
@@ -75,13 +76,9 @@ ruleTester.run('rule "indent"', rule, {
 test
         \`
       `,
-      errors: [{
-        message: buildMessage(10, 0),
-        line: 3,
-        column: 1,
-        endLine: 3,
-        endColumn: 1,
-      }],
+      errors: [
+        buildError([3, 1], [3, 1], buildMessage(10, 0)),
+      ],
     },
     {
       code: `
@@ -89,13 +86,9 @@ test
          test
         \`
       `,
-      errors: [{
-        message: buildMessage(10, 9),
-        line: 3,
-        column: 1,
-        endLine: 3,
-        endColumn: 10,
-      }],
+      errors: [
+        buildError([3, 1], [3, 10], buildMessage(10, 9)),
+      ],
     },
     {
       code: `
@@ -103,13 +96,9 @@ test
            div
         \`
       `,
-      errors: [{
-        message: buildMessage(10, 11),
-        line: 3,
-        column: 1,
-        endLine: 3,
-        endColumn: 12,
-      }],
+      errors: [
+        buildError([3, 1], [3, 12], buildMessage(10, 11)),
+      ],
     },
     {
       code: `
@@ -117,13 +106,9 @@ test
              div
           \`
       `,
-      errors: [{
-        message: buildMessage(12, 13),
-        line: 3,
-        column: 1,
-        endLine: 3,
-        endColumn: 14,
-      }],
+      errors: [
+        buildError([3, 1], [3, 14], buildMessage(12, 13)),
+      ],
     },
     {
       code: `
@@ -135,13 +120,9 @@ test
            div
         \`
       `,
-      errors: [{
-        message: buildMessage(12, 11),
-        line: 7,
-        column: 1,
-        endLine: 7,
-        endColumn: 12,
-      }],
+      errors: [
+        buildError([7, 1], [7, 12], buildMessage(12, 11)),
+      ],
     },
     {
       code: `
@@ -153,19 +134,10 @@ test
              div(incorrect)
         \`
       `,
-      errors: [{
-        message: buildMessage(14, 13),
-        line: 5,
-        column: 1,
-        endLine: 5,
-        endColumn: 14,
-      }, {
-        message: buildMessage(16, 14),
-        line: 6,
-        column: 1,
-        endLine: 6,
-        endColumn: 15,
-      }],
+      errors: [
+        buildError([5, 1], [5, 14], buildMessage(14, 13)),
+        buildError([6, 1], [6, 15], buildMessage(16, 14)),
+      ],
     },
     {
       code: `
@@ -174,19 +146,10 @@ test
                 div
         \`
       `,
-      errors: [{
-        message: buildMessage(10, 12),
-        line: 3,
-        column: 1,
-        endLine: 3,
-        endColumn: 13,
-      }, {
-        message: buildMessage(12, 16),
-        line: 4,
-        column: 1,
-        endLine: 4,
-        endColumn: 17,
-      }],
+      errors: [
+        buildError([3, 1], [3, 13], buildMessage(10, 12)),
+        buildError([4, 1], [4, 17], buildMessage(12, 16)),
+      ],
     },
     {
       code: `
@@ -197,19 +160,10 @@ test
           \`
         }
       `,
-      errors: [{
-        line: 4,
-        column: 1,
-        endLine: 4,
-        endColumn: 14,
-        message: buildMessage(12, 13),
-      }, {
-        line: 5,
-        column: 1,
-        endLine: 5,
-        endColumn: 16,
-        message: buildMessage(14, 15),
-      }],
+      errors: [
+        buildError([4, 1], [4, 14], buildMessage(12, 13)),
+        buildError([5, 1], [5, 16], buildMessage(14, 15)),
+      ],
     },
   ],
 })

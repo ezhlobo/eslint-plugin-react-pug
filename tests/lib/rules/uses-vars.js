@@ -10,6 +10,7 @@
 const eslint = require('eslint')
 const ruleNoUnusedVars = require('eslint/lib/rules/no-unused-vars')
 const rulePreferConst = require('eslint/lib/rules/prefer-const')
+const buildError = require('../../../lib/util/testBuildError')
 
 const { RuleTester } = eslint
 
@@ -132,13 +133,9 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
 
         pug\`div\`
       `,
-      errors: [{
-        message: '\'text\' is defined but never used.',
-        line: 3,
-        column: 13,
-        endLine: 3,
-        endColumn: 17,
-      }],
+      errors: [
+        buildError([3, 13], [3, 17], '\'text\' is defined but never used.'),
+      ],
     },
     {
       code: `
@@ -147,13 +144,9 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
 
         pug\`Component\`
       `,
-      errors: [{
-        message: '\'Child\' is defined but never used.',
-        line: 3,
-        column: 24,
-        endLine: 3,
-        endColumn: 29,
-      }],
+      errors: [
+        buildError([3, 24], [3, 29], '\'Child\' is defined but never used.'),
+      ],
     },
     {
       code: `
@@ -163,13 +156,9 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
 
         pug\`Component.Nested Plain text\`
       `,
-      errors: [{
-        message: '\'Nested\' is defined but never used.',
-        line: 4,
-        column: 13,
-        endLine: 4,
-        endColumn: 19,
-      }],
+      errors: [
+        buildError([4, 13], [4, 19], '\'Nested\' is defined but never used.'),
+      ],
     },
     {
       code: `
@@ -181,13 +170,9 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
           }
         }
       `,
-      errors: [{
-        message: '\'HelloMessage\' is defined but never used.',
-        line: 3,
-        column: 15,
-        endLine: 3,
-        endColumn: 27,
-      }],
+      errors: [
+        buildError([3, 15], [3, 27], '\'HelloMessage\' is defined but never used.'),
+      ],
     },
     {
       code: `
@@ -199,13 +184,9 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
         }
         Greetings();
       `,
-      errors: [{
-        message: '\'Hello\' is defined but never used.',
-        line: 3,
-        column: 17,
-        endLine: 3,
-        endColumn: 22,
-      }],
+      errors: [
+        buildError([3, 17], [3, 22], '\'Hello\' is defined but never used.'),
+      ],
     },
     {
       code: `
@@ -219,13 +200,9 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
             = variable
         \`
       `,
-      errors: [{
-        message: '\'item\' is assigned a value but never used.',
-        line: 3,
-        column: 15,
-        endLine: 3,
-        endColumn: 19,
-      }],
+      errors: [
+        buildError([3, 15], [3, 19], '\'item\' is assigned a value but never used.'),
+      ],
     },
     {
       code: `
@@ -240,13 +217,9 @@ ruleTester.run('rule "uses-vars" (no-unused-vars)', ruleNoUnusedVars, {
               = usedVariable
         \`
       `,
-      errors: [{
-        message: '\'variable\' is assigned a value but never used.',
-        line: 3,
-        column: 15,
-        endLine: 3,
-        endColumn: 23,
-      }],
+      errors: [
+        buildError([3, 15], [3, 23], '\'variable\' is assigned a value but never used.'),
+      ],
     },
   ],
 })
