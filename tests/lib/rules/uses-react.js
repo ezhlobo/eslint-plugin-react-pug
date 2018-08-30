@@ -9,6 +9,7 @@
 
 const eslint = require('eslint')
 const ruleNoUnusedVars = require('eslint/lib/rules/no-unused-vars')
+const buildError = require('../../../lib/util/testBuildError')
 
 const { RuleTester } = eslint
 
@@ -37,13 +38,9 @@ ruleTester.run('rule "uses-react"', ruleNoUnusedVars, {
   invalid: [
     {
       code: '/*eslint uses-react:1*/ var React;',
-      errors: [{
-        message: '\'React\' is defined but never used.',
-        line: 1,
-        column: 29,
-        endLine: 1,
-        endColumn: 34,
-      }],
+      errors: [
+        buildError([1, 29], [1, 34], '\'React\' is defined but never used.'),
+      ],
     },
   ],
 })

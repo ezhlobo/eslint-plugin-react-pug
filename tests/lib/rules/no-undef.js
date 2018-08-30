@@ -9,6 +9,7 @@
 
 const eslint = require('eslint')
 const ruleNoUndef = require('eslint/lib/rules/no-undef')
+const buildError = require('../../../lib/util/testBuildError')
 
 const { RuleTester } = eslint
 
@@ -68,23 +69,15 @@ ruleTester.run('rule "no-undef"', rule, {
   invalid: [
     {
       code: '/*global pug*//*eslint no-undef:1*/ pug`App`;',
-      errors: [{
-        message: '\'App\' is not defined.',
-        line: 1,
-        column: 41,
-        endLine: 1,
-        endColumn: 44,
-      }],
+      errors: [
+        buildError([1, 41], [1, 44], '\'App\' is not defined.'),
+      ],
     },
     {
       code: '/*global pug*//*eslint no-undef:1*/ pug`= app`;',
-      errors: [{
-        message: '\'app\' is not defined.',
-        line: 1,
-        column: 43,
-        endLine: 1,
-        endColumn: 46,
-      }],
+      errors: [
+        buildError([1, 43], [1, 46], '\'app\' is not defined.'),
+      ],
     },
     {
       code: `/*global pug*//*eslint no-undef:1*/
@@ -95,13 +88,9 @@ ruleTester.run('rule "no-undef"', rule, {
             = variable
         \`
       `,
-      errors: [{
-        message: '\'variable\' is not defined.',
-        line: 6,
-        column: 15,
-        endLine: 6,
-        endColumn: 23,
-      }],
+      errors: [
+        buildError([6, 15], [6, 23], '\'variable\' is not defined.'),
+      ],
     },
     {
       code: `/*global pug*//*eslint no-undef:1*/
@@ -111,19 +100,10 @@ ruleTester.run('rule "no-undef"', rule, {
           = upKey
         \`
       `,
-      errors: [{
-        message: '\'upValue\' is not defined.',
-        line: 4,
-        column: 13,
-        endLine: 4,
-        endColumn: 20,
-      }, {
-        message: '\'upKey\' is not defined.',
-        line: 5,
-        column: 13,
-        endLine: 5,
-        endColumn: 18,
-      }],
+      errors: [
+        buildError([4, 13], [4, 20], '\'upValue\' is not defined.'),
+        buildError([5, 13], [5, 18], '\'upKey\' is not defined.'),
+      ],
     },
   ],
 })

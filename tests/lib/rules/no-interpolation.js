@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 const eslint = require('eslint')
+const buildError = require('../../../lib/util/testBuildError')
 
 const { RuleTester } = eslint
 
@@ -39,19 +40,10 @@ ruleTester.run('rule "no-interpolation"', rule, {
           div \${example} \${example}
         \`
       `,
-      errors: [{
-        message: MESSAGE,
-        line: 3,
-        column: 15,
-        endLine: 3,
-        endColumn: 25,
-      }, {
-        message: MESSAGE,
-        line: 3,
-        column: 26,
-        endLine: 3,
-        endColumn: 36,
-      }],
+      errors: [
+        buildError([3, 15], [3, 25], MESSAGE),
+        buildError([3, 26], [3, 36], MESSAGE),
+      ],
     },
     {
       code: `
@@ -59,13 +51,9 @@ ruleTester.run('rule "no-interpolation"', rule, {
           div before \${example} after
         \`
       `,
-      errors: [{
-        message: MESSAGE,
-        line: 3,
-        column: 22,
-        endLine: 3,
-        endColumn: 32,
-      }],
+      errors: [
+        buildError([3, 22], [3, 32], MESSAGE),
+      ],
     },
     {
       code: `
@@ -73,13 +61,9 @@ ruleTester.run('rule "no-interpolation"', rule, {
           div before \${  long_variable  +  something_else  } after
         \`
       `,
-      errors: [{
-        message: MESSAGE,
-        line: 3,
-        column: 22,
-        endLine: 3,
-        endColumn: 61,
-      }],
+      errors: [
+        buildError([3, 22], [3, 61], MESSAGE),
+      ],
     },
     {
       code: `
@@ -88,25 +72,17 @@ ruleTester.run('rule "no-interpolation"', rule, {
             p= items
         \`
       `,
-      errors: [{
-        message: MESSAGE,
-        line: 3,
-        column: 24,
-        endLine: 3,
-        endColumn: 34,
-      }],
+      errors: [
+        buildError([3, 24], [3, 34], MESSAGE),
+      ],
     },
     {
       code: `
         pug\`div= \${ example }\`
       `,
-      errors: [{
-        message: MESSAGE,
-        line: 2,
-        column: 18,
-        endLine: 2,
-        endColumn: 30,
-      }],
+      errors: [
+        buildError([2, 18], [2, 30], MESSAGE),
+      ],
     },
   ],
 })

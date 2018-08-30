@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 const eslint = require('eslint')
+const buildError = require('../../../lib/util/testBuildError')
 
 const { RuleTester } = eslint
 
@@ -71,31 +72,18 @@ ruleTester.run('rule "quotes"', rule, {
       code: `
         pug\`div(attr= ' hello '  second=  ' hello ' )\`
       `,
-      errors: [{
-        message: MESSAGE_PLAIN,
-        line: 2,
-        column: 24,
-        endLine: 2,
-        endColumn: 33,
-      }, {
-        message: MESSAGE_PLAIN,
-        line: 2,
-        column: 44,
-        endLine: 2,
-        endColumn: 53,
-      }],
+      errors: [
+        buildError([2, 24], [2, 33], MESSAGE_PLAIN),
+        buildError([2, 44], [2, 53], MESSAGE_PLAIN),
+      ],
     },
     {
       code: `
         pug\`div(attr= 1 + 'hello' + 1 )\`
       `,
-      errors: [{
-        message: MESSAGE_PLAIN,
-        line: 2,
-        column: 28,
-        endLine: 2,
-        endColumn: 35,
-      }],
+      errors: [
+        buildError([2, 28], [2, 35], MESSAGE_PLAIN),
+      ],
     },
     {
       code: `
@@ -103,13 +91,9 @@ ruleTester.run('rule "quotes"', rule, {
           div(attr= ' hello ' )
         \`
       `,
-      errors: [{
-        message: MESSAGE_PLAIN,
-        line: 3,
-        column: 21,
-        endLine: 3,
-        endColumn: 30,
-      }],
+      errors: [
+        buildError([3, 21], [3, 30], MESSAGE_PLAIN),
+      ],
     },
     {
       code: `
@@ -117,25 +101,11 @@ ruleTester.run('rule "quotes"', rule, {
           return pug\`div( attr= test ?  'one'  :  'two' || 'three' )\`
         }
       `,
-      errors: [{
-        message: MESSAGE_PLAIN,
-        line: 3,
-        column: 42,
-        endLine: 3,
-        endColumn: 47,
-      }, {
-        message: MESSAGE_PLAIN,
-        line: 3,
-        column: 52,
-        endLine: 3,
-        endColumn: 57,
-      }, {
-        message: MESSAGE_PLAIN,
-        line: 3,
-        column: 61,
-        endLine: 3,
-        endColumn: 68,
-      }],
+      errors: [
+        buildError([3, 42], [3, 47], MESSAGE_PLAIN),
+        buildError([3, 52], [3, 57], MESSAGE_PLAIN),
+        buildError([3, 61], [3, 68], MESSAGE_PLAIN),
+      ],
     },
     {
       code: `
@@ -143,43 +113,26 @@ ruleTester.run('rule "quotes"', rule, {
           div(attr= test ? 'one' :  'two')
         \`
       `,
-      errors: [{
-        message: MESSAGE_PLAIN,
-        line: 3,
-        column: 28,
-        endLine: 3,
-        endColumn: 33,
-      }, {
-        message: MESSAGE_PLAIN,
-        line: 3,
-        column: 37,
-        endLine: 3,
-        endColumn: 42,
-      }],
+      errors: [
+        buildError([3, 28], [3, 33], MESSAGE_PLAIN),
+        buildError([3, 37], [3, 42], MESSAGE_PLAIN),
+      ],
     },
     {
       code: `
         pug\`div(attr={ test:  "one" })\`
       `,
-      errors: [{
-        message: MESSAGE_CODE,
-        line: 2,
-        column: 32,
-        endLine: 2,
-        endColumn: 37,
-      }],
+      errors: [
+        buildError([2, 32], [2, 37], MESSAGE_CODE),
+      ],
     },
     {
       code: `
         pug\`div(attr=[ "one" ])\`
       `,
-      errors: [{
-        message: MESSAGE_CODE,
-        line: 2,
-        column: 25,
-        endLine: 2,
-        endColumn: 30,
-      }],
+      errors: [
+        buildError([2, 25], [2, 30], MESSAGE_CODE),
+      ],
     },
     {
       code: `
@@ -188,19 +141,10 @@ ruleTester.run('rule "quotes"', rule, {
           div #{"one"}
         \`
       `,
-      errors: [{
-        message: MESSAGE_CODE,
-        line: 3,
-        column: 16,
-        endLine: 3,
-        endColumn: 21,
-      }, {
-        message: MESSAGE_CODE,
-        line: 4,
-        column: 17,
-        endLine: 4,
-        endColumn: 22,
-      }],
+      errors: [
+        buildError([3, 16], [3, 21], MESSAGE_CODE),
+        buildError([4, 17], [4, 22], MESSAGE_CODE),
+      ],
     },
     {
       code: `
@@ -210,19 +154,10 @@ ruleTester.run('rule "quotes"', rule, {
             p "#{item}"
         \`
       `,
-      errors: [{
-        message: MESSAGE_CODE,
-        line: 3,
-        column: 33,
-        endLine: 3,
-        endColumn: 38,
-      }, {
-        message: MESSAGE_CODE,
-        line: 3,
-        column: 40,
-        endLine: 3,
-        endColumn: 45,
-      }],
+      errors: [
+        buildError([3, 33], [3, 38], MESSAGE_CODE),
+        buildError([3, 40], [3, 45], MESSAGE_CODE),
+      ],
     },
     {
       code: `
@@ -231,13 +166,9 @@ ruleTester.run('rule "quotes"', rule, {
             p Hello
         \`
       `,
-      errors: [{
-        message: MESSAGE_CODE,
-        line: 3,
-        column: 39,
-        endLine: 3,
-        endColumn: 44,
-      }],
+      errors: [
+        buildError([3, 39], [3, 44], MESSAGE_CODE),
+      ],
     },
   ],
 })
