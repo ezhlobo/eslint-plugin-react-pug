@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 const eslint = require('eslint')
+const buildError = require('../../../lib/util/testBuildError')
 
 const { RuleTester } = eslint
 
@@ -33,12 +34,40 @@ const MESSAGE = {
 
 ruleTester.run('rule "empty-lines"', rule, {
   valid: [
-    { code: 'pug`div`' },
-    { code: 'pug` div `' },
+    { code: 'pug`div text`' },
+    { code: 'pug` div text `' },
     {
       code: `
         pug\`
-          div
+          div text
+        \`
+      `,
+    },
+    {
+      code: `
+        pug\`
+          div text
+          div text
+        \`
+      `,
+    },
+    {
+      code: `
+        pug\`
+          div text
+
+          div text
+        \`
+      `,
+    },
+    {
+      code: `
+        pug\`
+          div text
+
+          div text
+
+          div text
         \`
       `,
     },
@@ -46,7 +75,10 @@ ruleTester.run('rule "empty-lines"', rule, {
       code: `
         pug\`
           div
-          div
+            div text
+
+          div text
+          div text
         \`
       `,
     },
@@ -54,19 +86,13 @@ ruleTester.run('rule "empty-lines"', rule, {
       code: `
         pug\`
           div
+            div text
 
-          div
-        \`
-      `,
-    },
-    {
-      code: `
-        pug\`
-          div
+          div text
 
-          div
+          div text
 
-          div
+          div text
         \`
       `,
     },
@@ -75,36 +101,34 @@ ruleTester.run('rule "empty-lines"', rule, {
         pug\`
           div
             div
+              div text
 
-          div
-          div
+            div text
+
+          div text
         \`
       `,
     },
     {
       code: `
         pug\`
-          div
-            div
-
-          div
-
-          div
-
-          div
+          div before
+          | one
+          | two
+          | tree
+          | four
+          div after
         \`
       `,
     },
     {
       code: `
         pug\`
-          div
-            div
-              div
-
-            div
-
-          div
+          div.
+            Hello
+            Second
+            Third
+            Fourth
         \`
       `,
     },
@@ -115,146 +139,100 @@ ruleTester.run('rule "empty-lines"', rule, {
         pug\`div
         \`
       `,
-      errors: [{
-        message: MESSAGE.newline_start,
-        line: 2,
-        column: 12,
-        endLine: 2,
-        endColumn: 16,
-      }],
+      errors: [
+        buildError([2, 12], [2, 16], MESSAGE.newline_start),
+      ],
     },
     {
       code: `
         pug\`   div
         \`
       `,
-      errors: [{
-        message: MESSAGE.newline_start,
-        line: 2,
-        column: 12,
-        endLine: 2,
-        endColumn: 19,
-      }],
+      errors: [
+        buildError([2, 12], [2, 19], MESSAGE.newline_start),
+      ],
     },
     {
       code: `
         pug\`
           div\`
       `,
-      errors: [{
-        message: MESSAGE.newline_end,
-        line: 3,
-        column: 11,
-        endLine: 3,
-        endColumn: 15,
-      }],
+      errors: [
+        buildError([3, 11], [3, 15], MESSAGE.newline_end),
+      ],
     },
     {
       code: `
         pug\`
           div  \`
       `,
-      errors: [{
-        message: MESSAGE.newline_end,
-        line: 3,
-        column: 11,
-        endLine: 3,
-        endColumn: 17,
-      }],
+      errors: [
+        buildError([3, 11], [3, 17], MESSAGE.newline_end),
+      ],
     },
     {
       code: `
         pug\`
 
-          div
+          div text
         \`
       `,
-      errors: [{
-        message: MESSAGE.single_empty_lines,
-        line: 2,
-        column: 1,
-        endLine: 3,
-        endColumn: 1,
-      }],
+      errors: [
+        buildError([2, 1], [3, 1], MESSAGE.single_empty_lines),
+      ],
     },
     {
       code: `
         pug\`
-          div
+          div text
 
         \`
       `,
-      errors: [{
-        message: MESSAGE.single_empty_lines,
-        line: 4,
-        column: 1,
-        endLine: 5,
-        endColumn: 1,
-      }],
+      errors: [
+        buildError([4, 1], [5, 1], MESSAGE.single_empty_lines),
+      ],
     },
     {
       code: `
         pug\`
 
-          div
+          div text
 
         \`
       `,
-      errors: [{
-        message: MESSAGE.single_empty_lines,
-        line: 2,
-        column: 1,
-        endLine: 3,
-        endColumn: 1,
-      }, {
-        message: MESSAGE.single_empty_lines,
-        line: 5,
-        column: 1,
-        endLine: 6,
-        endColumn: 1,
-      }],
+      errors: [
+        buildError([2, 1], [3, 1], MESSAGE.single_empty_lines),
+        buildError([5, 1], [6, 1], MESSAGE.single_empty_lines),
+      ],
+    },
+    {
+      code: `
+        pug\`
+          div text
+
+
+
+          div text
+        \`
+      `,
+      errors: [
+        buildError([4, 1], [5, 1], MESSAGE.single_empty_lines),
+        buildError([5, 1], [6, 1], MESSAGE.single_empty_lines),
+      ],
     },
     {
       code: `
         pug\`
           div
+            div text
 
 
-
-          div
+          div text
         \`
       `,
-      errors: [{
-        message: MESSAGE.single_empty_lines,
-        line: 4,
-        column: 1,
-        endLine: 5,
-        endColumn: 1,
-      }, {
-        message: MESSAGE.single_empty_lines,
-        line: 5,
-        column: 1,
-        endLine: 6,
-        endColumn: 1,
-      }],
-    },
-    {
-      code: `
-        pug\`
-          div
-            div
-
-
-          div
-        \`
-      `,
-      errors: [{
-        message: MESSAGE.single_empty_lines,
-        line: 5,
-        column: 1,
-        endLine: 6,
-        endColumn: 1,
-      }],
+      errors: [
+        buildError([5, 1], [6, 1], MESSAGE.single_empty_lines),
+      ],
     },
     {
       code: `
@@ -264,19 +242,10 @@ ruleTester.run('rule "empty-lines"', rule, {
           div three
         \`
       `,
-      errors: [{
-        line: 4,
-        column: 1,
-        endLine: 4,
-        endColumn: 11,
-        message: MESSAGE.need_empty_siblings,
-      }, {
-        line: 5,
-        column: 1,
-        endLine: 5,
-        endColumn: 11,
-        message: MESSAGE.need_empty_siblings,
-      }],
+      errors: [
+        buildError([4, 1], [4, 11], MESSAGE.need_empty_siblings),
+        buildError([5, 1], [5, 11], MESSAGE.need_empty_siblings),
+      ],
     },
     {
       code: `
@@ -287,25 +256,11 @@ ruleTester.run('rule "empty-lines"', rule, {
           div four
         \`
       `,
-      errors: [{
-        line: 4,
-        column: 1,
-        endLine: 4,
-        endColumn: 11,
-        message: MESSAGE.need_empty_siblings,
-      }, {
-        line: 5,
-        column: 1,
-        endLine: 5,
-        endColumn: 11,
-        message: MESSAGE.need_empty_siblings,
-      }, {
-        line: 6,
-        column: 1,
-        endLine: 6,
-        endColumn: 11,
-        message: MESSAGE.need_empty_siblings,
-      }],
+      errors: [
+        buildError([4, 1], [4, 11], MESSAGE.need_empty_siblings),
+        buildError([5, 1], [5, 11], MESSAGE.need_empty_siblings),
+        buildError([6, 1], [6, 11], MESSAGE.need_empty_siblings),
+      ],
     },
     {
       code: `
@@ -317,25 +272,16 @@ ruleTester.run('rule "empty-lines"', rule, {
 
           div
             div
-              div
+              div text
 
-            div
-            div
+            div text
+            div text
         \`
       `,
-      errors: [{
-        line: 5,
-        column: 1,
-        endLine: 5,
-        endColumn: 13,
-        message: MESSAGE.need_empty_siblings,
-      }, {
-        line: 6,
-        column: 1,
-        endLine: 6,
-        endColumn: 13,
-        message: MESSAGE.need_empty_siblings,
-      }],
+      errors: [
+        buildError([5, 1], [5, 13], MESSAGE.need_empty_siblings),
+        buildError([6, 1], [6, 13], MESSAGE.need_empty_siblings),
+      ],
     },
     {
       code: `
@@ -348,19 +294,10 @@ ruleTester.run('rule "empty-lines"', rule, {
           div three
         \`
       `,
-      errors: [{
-        line: 7,
-        column: 1,
-        endLine: 7,
-        endColumn: 11,
-        message: MESSAGE.need_empty_siblings,
-      }, {
-        line: 8,
-        column: 1,
-        endLine: 8,
-        endColumn: 11,
-        message: MESSAGE.need_empty_siblings,
-      }],
+      errors: [
+        buildError([7, 1], [7, 11], MESSAGE.need_empty_siblings),
+        buildError([8, 1], [8, 11], MESSAGE.need_empty_siblings),
+      ],
     },
     {
       code: `
@@ -368,22 +305,13 @@ ruleTester.run('rule "empty-lines"', rule, {
           div one
           div two
           div
-            div
+            div four
         \`
       `,
-      errors: [{
-        line: 4,
-        column: 1,
-        endLine: 4,
-        endColumn: 11,
-        message: MESSAGE.need_empty_siblings,
-      }, {
-        line: 5,
-        column: 1,
-        endLine: 5,
-        endColumn: 11,
-        message: MESSAGE.need_empty_siblings,
-      }],
+      errors: [
+        buildError([4, 1], [4, 11], MESSAGE.need_empty_siblings),
+        buildError([5, 1], [5, 11], MESSAGE.need_empty_siblings),
+      ],
     },
     {
       code: `
@@ -394,13 +322,9 @@ ruleTester.run('rule "empty-lines"', rule, {
           div three
         \`
       `,
-      errors: [{
-        line: 6,
-        column: 1,
-        endLine: 6,
-        endColumn: 11,
-        message: MESSAGE.need_empty_siblings,
-      }],
+      errors: [
+        buildError([6, 1], [6, 11], MESSAGE.need_empty_siblings),
+      ],
     },
     {
       code: `
@@ -411,53 +335,66 @@ ruleTester.run('rule "empty-lines"', rule, {
           div three
         \`
       `,
-      errors: [{
-        line: 4,
-        column: 1,
-        endLine: 4,
-        endColumn: 11,
-        message: MESSAGE.need_empty_siblings,
-      }],
+      errors: [
+        buildError([4, 1], [4, 11], MESSAGE.need_empty_siblings),
+      ],
+    },
+    {
+      code: `
+        pug\`
+          div
+            div text
+          div text
+        \`
+      `,
+      errors: [
+        buildError([5, 1], [5, 11], MESSAGE.need_empty_outdent),
+      ],
     },
     {
       code: `
         pug\`
           div
             div
-          div
+              div text
+            div text
+          div text
         \`
       `,
-      errors: [{
-        line: 5,
-        column: 1,
-        endLine: 5,
-        endColumn: 11,
-        message: MESSAGE.need_empty_outdent,
-      }],
+      errors: [
+        buildError([6, 1], [6, 13], MESSAGE.need_empty_outdent),
+        buildError([7, 1], [7, 11], MESSAGE.need_empty_outdent),
+      ],
+    },
+    {
+      code: `
+        pug\`
+          div one
+          | text
+          div two
+          div three
+          div four
+        \`
+      `,
+      errors: [
+        buildError([6, 1], [6, 11], MESSAGE.need_empty_siblings),
+        buildError([7, 1], [7, 11], MESSAGE.need_empty_siblings),
+      ],
     },
     {
       code: `
         pug\`
           div
-            div
-              div
-            div
-          div
+            | text
+            | text
+            | text
+            | text
+          div text
         \`
       `,
-      errors: [{
-        line: 6,
-        column: 1,
-        endLine: 6,
-        endColumn: 13,
-        message: MESSAGE.need_empty_outdent,
-      }, {
-        line: 7,
-        column: 1,
-        endLine: 7,
-        endColumn: 11,
-        message: MESSAGE.need_empty_outdent,
-      }],
+      errors: [
+        buildError([8, 1], [8, 11], MESSAGE.need_empty_outdent),
+      ],
     },
   ],
 })
