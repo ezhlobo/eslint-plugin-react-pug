@@ -57,6 +57,14 @@ ruleTester.run('rule "quotes"', rule, {
         \`
       `,
     },
+    {
+      code: `
+        pug\`
+          each item in Array(10).fill('one')
+            p Hello
+        \`
+      `,
+    },
   ],
   invalid: [
     {
@@ -214,6 +222,21 @@ ruleTester.run('rule "quotes"', rule, {
         column: 40,
         endLine: 3,
         endColumn: 45,
+      }],
+    },
+    {
+      code: `
+        pug\`
+          each item in Array(10).fill("one")
+            p Hello
+        \`
+      `,
+      errors: [{
+        message: MESSAGE_CODE,
+        line: 3,
+        column: 39,
+        endLine: 3,
+        endColumn: 44,
       }],
     },
   ],
