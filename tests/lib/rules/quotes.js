@@ -66,6 +66,13 @@ ruleTester.run('rule "quotes"', rule, {
         \`
       `,
     },
+    {
+      code: `
+        pug\`
+          div(class=['one', 'two', test['three']].join(' '))
+        \`
+      `,
+    },
   ],
   invalid: [
     {
@@ -168,6 +175,19 @@ ruleTester.run('rule "quotes"', rule, {
       `,
       errors: [
         buildError([3, 39], [3, 44], MESSAGE_CODE),
+      ],
+    },
+    {
+      code: `
+        pug\`
+          div(class=["one", "two", test["three"]].join(" "))
+        \`
+      `,
+      errors: [
+        buildError([3, 22], [3, 27], MESSAGE_CODE),
+        buildError([3, 29], [3, 34], MESSAGE_CODE),
+        buildError([3, 41], [3, 48], MESSAGE_CODE),
+        buildError([3, 56], [3, 59], MESSAGE_CODE),
       ],
     },
   ],
