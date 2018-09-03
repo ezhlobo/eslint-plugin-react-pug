@@ -28,6 +28,7 @@ const MESSAGE = {
   newline_start: 'Expected new line in the beginning',
   newline_end: 'Expected new line in the end',
   single_empty_lines: 'Use 1 empty line',
+  no_lines_indent: 'Expected no empty lines for nested items',
   need_empty_siblings: 'Need empty line for more than two siblings',
   need_empty_outdent: 'Need empty line when you are off from the scope',
 }
@@ -129,6 +130,14 @@ ruleTester.run('rule "empty-lines"', rule, {
             Second
             Third
             Fourth
+        \`
+      `,
+    },
+    {
+      code: `
+        pug\`
+          div
+            div text
         \`
       `,
     },
@@ -394,6 +403,33 @@ ruleTester.run('rule "empty-lines"', rule, {
       `,
       errors: [
         buildError([8, 1], [8, 11], MESSAGE.need_empty_outdent),
+      ],
+    },
+    {
+      code: `
+        pug\`
+          div
+
+            div text
+        \`
+      `,
+      errors: [
+        buildError([3, 14], [5, 13], MESSAGE.no_lines_indent),
+      ],
+    },
+    {
+      code: `
+        pug\`
+          div
+            div
+
+            div
+
+              div text
+        \`
+      `,
+      errors: [
+        buildError([6, 16], [8, 15], MESSAGE.no_lines_indent),
       ],
     },
   ],

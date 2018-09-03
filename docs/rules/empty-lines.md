@@ -7,6 +7,7 @@ It creates rules for managing empty lines:
 * Require empty line before we go out from nesting
 * Require empty line between siblings (if there are more than 2 siblings)
 * Prohibit more than 1 empty line
+* Prohibit empty line for nested items
 
 ## Rule Details
 
@@ -30,6 +31,14 @@ pug`
   div
     div Nested
   div Outside
+`
+```
+
+```jsx
+pug`
+  div
+
+    div Nested
 `
 ```
 
@@ -61,6 +70,13 @@ pug`
     div Nested
 
   div Outside
+`
+```
+
+```jsx
+pug`
+  div
+    div Nested
 `
 ```
 
