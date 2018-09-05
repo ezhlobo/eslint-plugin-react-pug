@@ -141,6 +141,31 @@ ruleTester.run('rule "empty-lines"', rule, {
         \`
       `,
     },
+    {
+      code: `
+        pug\`
+          div.
+            Text
+
+          div Text
+        \`
+      `,
+    },
+    {
+      code: `
+        pug\`
+          div
+            div.
+              Text inside
+
+            div.
+              Text inside
+
+            div.
+              Text inside
+        \`
+      `,
+    },
   ],
   invalid: [
     {
@@ -430,6 +455,18 @@ ruleTester.run('rule "empty-lines"', rule, {
       `,
       errors: [
         buildError([6, 16], [8, 15], MESSAGE.no_lines_indent),
+      ],
+    },
+    {
+      code: `
+        pug\`
+          div.
+            Text
+          div Text
+        \`
+      `,
+      errors: [
+        buildError([5, 1], [5, 11], MESSAGE.need_empty_outdent),
       ],
     },
   ],
