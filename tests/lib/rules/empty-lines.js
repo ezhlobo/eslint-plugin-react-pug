@@ -168,6 +168,26 @@ ruleTester.run('rule "empty-lines"', rule, {
     },
     {
       code: `
+        pug\`
+          div
+            div Text inside
+
+            div.
+              Text inside
+              One
+              Two
+              Three
+
+            div.
+              Text inside
+
+            div.
+              Text inside
+        \`
+      `,
+    },
+    {
+      code: `
         const result = pug\`Component(
           attr="first"
         )\`
