@@ -68,6 +68,13 @@ ruleTester.run('rule "indent"', rule, {
         }
       `,
     },
+    {
+      code: `
+        const result = pug\`Component(
+          attr="Hello"
+        )\`
+      `,
+    },
   ],
   invalid: [
     {
