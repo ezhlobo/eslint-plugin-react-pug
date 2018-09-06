@@ -166,6 +166,13 @@ ruleTester.run('rule "empty-lines"', rule, {
         \`
       `,
     },
+    {
+      code: `
+        const result = pug\`Component(
+          attr="first"
+        )\`
+      `,
+    },
   ],
   invalid: [
     {
