@@ -193,6 +193,37 @@ ruleTester.run('rule "empty-lines"', rule, {
         )\`
       `,
     },
+    {
+      code: `
+        pug\`
+          div
+            // div One
+            // div Two
+            // div Three
+        \`
+      `,
+    },
+    {
+      code: `
+        pug\`
+          div
+            // div One
+
+            // div Two
+            // div Three
+        \`
+      `,
+    },
+    {
+      code: `
+        pug\`
+          div
+            // div One
+
+          div
+        \`
+      `,
+    },
   ],
   invalid: [
     {
@@ -490,6 +521,44 @@ ruleTester.run('rule "empty-lines"', rule, {
           div.
             Text
           div Text
+        \`
+      `,
+      errors: [
+        buildError([5, 1], [5, 11], MESSAGE.need_empty_outdent),
+      ],
+    },
+    {
+      code: `
+        pug\`
+          div
+            // div Text
+
+
+            // div Text
+        \`
+      `,
+      errors: [
+        buildError([5, 1], [6, 1], MESSAGE.single_empty_lines),
+      ],
+    },
+    {
+      code: `
+        pug\`
+          div
+
+            // div One
+        \`
+      `,
+      errors: [
+        buildError([3, 14], [5, 13], MESSAGE.no_lines_indent),
+      ],
+    },
+    {
+      code: `
+        pug\`
+          div
+            // div One
+          div
         \`
       `,
       errors: [
