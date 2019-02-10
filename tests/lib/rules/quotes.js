@@ -73,6 +73,13 @@ ruleTester.run('rule "quotes"', rule, {
         \`
       `,
     },
+    {
+      code: `
+        pug\`
+          - const text = 'Hello'
+        \`
+      `,
+    },
   ],
   invalid: [
     {
@@ -188,6 +195,16 @@ ruleTester.run('rule "quotes"', rule, {
         buildError([3, 29], [3, 34], MESSAGE_CODE),
         buildError([3, 41], [3, 48], MESSAGE_CODE),
         buildError([3, 56], [3, 59], MESSAGE_CODE),
+      ],
+    },
+    {
+      code: `
+        pug\`
+          - const text = "Hello"
+        \`
+      `,
+      errors: [
+        buildError([3, 26], [3, 33], MESSAGE_CODE),
       ],
     },
   ],
