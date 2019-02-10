@@ -13,8 +13,6 @@ jobs:
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
 
-      - run: yarn global add greenkeeper-lockfile
-
       - run: yarn install
 
       - save_cache:
@@ -22,10 +20,6 @@ jobs:
           paths:
             - ~/.cache/yarn
 
-      - run: ~/.yarn/bin/greenkeeper-lockfile-update
-
       - run: yarn lint
 
       - run: yarn test --recursive
-
-      - run: ~/.yarn/bin/greenkeeper-lockfile-upload
