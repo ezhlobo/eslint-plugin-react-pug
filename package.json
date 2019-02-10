@@ -28,7 +28,7 @@
     "@babel/parser": "^7.3.2",
     "@babel/traverse": "^7.2.3",
     "pug-lexer": "^4.0.0",
-    "pug-uses-variables": "^2.0.2"
+    "pug-uses-variables": "^3.0.0"
   },
   "devDependencies": {
     "eslint": "^4.19.1 || ^5.13.0",
