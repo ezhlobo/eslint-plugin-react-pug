@@ -28,6 +28,7 @@
     "@babel/parser": "^7.0.0-rc.2",
     "@babel/traverse": "^7.0.0-rc.2",
     "pug-lexer": "^4.0.0",
+    "pug-lint": "^2.5.0",
     "pug-uses-variables": "^2.0.2"
   },
   "devDependencies": {

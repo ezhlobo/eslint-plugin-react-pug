@@ -12,6 +12,7 @@ const allRules = {
   quotes: require('./lib/rules/quotes'),
   'uses-react': require('./lib/rules/uses-react'),
   'uses-vars': require('./lib/rules/uses-vars'),
+  'pug-lint': require('./lib/rules/pug-lint'),
 }
 /* eslint-enable */
 
