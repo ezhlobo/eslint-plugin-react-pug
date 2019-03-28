@@ -24,6 +24,7 @@ module.exports = {
       },
       rules: {
         'react-pug/empty-lines': 2,
+        'react-pug/eslint': 2,
         'react-pug/indent': 2,
         'react-pug/no-broken-template': 2,
         'react-pug/no-undef': 2,
