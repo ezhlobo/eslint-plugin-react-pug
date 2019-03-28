@@ -117,6 +117,9 @@ const cases = [
     }],
     valid: {
       code: `
+        const getValueFor = () =>
+          null
+
         pug\`
           div(data-value=getValueFor(one, two, three))
         \`
@@ -124,15 +127,18 @@ const cases = [
     },
     invalid: {
       code: `
+        const getValueFor = () =>
+          null
+
         pug\`
           div(data-value=getValueFor(one,two,three,  four,   five))
         \`
       `,
       errors: [
-        buildError([3, 41], [3, 42], 'A space is required after \',\'.'),
-        buildError([3, 45], [3, 46], 'A space is required after \',\'.'),
-        buildError([3, 54], [3, 54], 'Multiple spaces found before \'four\'.'),
-        buildError([3, 62], [3, 62], 'Multiple spaces found before \'five\'.'),
+        buildError([6, 41], [6, 42], 'A space is required after \',\'.'),
+        buildError([6, 45], [6, 46], 'A space is required after \',\'.'),
+        buildError([6, 54], [6, 54], 'Multiple spaces found before \'four\'.'),
+        buildError([6, 62], [6, 62], 'Multiple spaces found before \'five\'.'),
       ],
     },
   },
