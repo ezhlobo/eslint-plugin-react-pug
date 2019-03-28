@@ -22,7 +22,8 @@
   ],
   "scripts": {
     "lint": "eslint ./",
-    "test": "mocha 'tests/**/*.js'"
+    "test": "mocha 'tests/**/*.js'",
+    "mocha": "mocha"
   },
   "dependencies": {
     "@babel/parser": "^7.3.2",
