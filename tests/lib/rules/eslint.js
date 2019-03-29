@@ -51,8 +51,8 @@ const cases = [
         \`
       `,
       errors: [
-        buildError([3, 27], [3, 27], 'Operator \'>\' must be spaced.'),
-        buildError([5, 32], [5, 32], 'Operator \'<\' must be spaced.'),
+        buildError([3, 14], [3, 29], 'Operator \'>\' must be spaced.'),
+        buildError([5, 19], [5, 36], 'Operator \'<\' must be spaced.'),
       ],
     },
   },
@@ -76,8 +76,8 @@ const cases = [
         \`
       `,
       errors: [
-        buildError([3, 26], [3, 26], 'A space is required after \'{\'.'),
-        buildError([3, 36], [3, 36], 'A space is required before \'}\'.'),
+        buildError([3, 13], [3, 37], 'A space is required after \'{\'.'),
+        buildError([3, 13], [3, 37], 'A space is required before \'}\'.'),
       ],
     },
   },
@@ -103,8 +103,8 @@ const cases = [
         \`
       `,
       errors: [
-        buildError([3, 25], [3, 25], 'A space is required after \'{\'.'),
-        buildError([3, 35], [3, 35], 'A space is required before \'}\'.'),
+        buildError([3, 24], [3, 37], 'A space is required after \'{\'.'),
+        buildError([3, 24], [3, 37], 'A space is required before \'}\'.'),
       ],
     },
   },
@@ -135,10 +135,10 @@ const cases = [
         \`
       `,
       errors: [
+        buildError([6, 26], [6, 67], 'Multiple spaces found before \'four\'.'),
+        buildError([6, 26], [6, 67], 'Multiple spaces found before \'five\'.'),
         buildError([6, 41], [6, 42], 'A space is required after \',\'.'),
         buildError([6, 45], [6, 46], 'A space is required after \',\'.'),
-        buildError([6, 54], [6, 54], 'Multiple spaces found before \'four\'.'),
-        buildError([6, 62], [6, 62], 'Multiple spaces found before \'five\'.'),
       ],
     },
   },
@@ -174,7 +174,7 @@ const cases = [
       `,
       errors: [
         buildError([6, 13], [6, 16], 'Expected indentation of 2 spaces but found 3.'),
-        buildError([6, 31], [6, 31], 'Missing trailing comma.'),
+        buildError([6, 13], [6, 31], 'Missing trailing comma.'),
       ],
     },
   },
@@ -202,8 +202,8 @@ const cases = [
       `,
       errors: [
         buildError([3, 33], [3, 34], 'A space is required after \',\'.'),
-        buildError([4, 30], [4, 30], 'A space is required after \'{\'.'),
-        buildError([4, 40], [4, 40], 'A space is required before \'}\'.'),
+        buildError([4, 25], [4, 42], 'A space is required after \'{\'.'),
+        buildError([4, 25], [4, 42], 'A space is required before \'}\'.'),
       ],
     },
   },
