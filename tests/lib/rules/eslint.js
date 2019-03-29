@@ -178,14 +178,51 @@ const cases = [
       ],
     },
   },
+
+  {
+    name: 'Interpolation',
+    options: [{
+      'comma-spacing': 'error',
+      'object-curly-spacing': ['error', 'always'],
+    }],
+    valid: {
+      code: `
+        pug\`
+          div Text is #{test(one, two)}
+          div Text is #{test({ one: true })}
+        \`
+      `,
+    },
+    invalid: {
+      code: `
+        pug\`
+          div Text is #{test(one,two)}
+          div Text is #{test({one: true})}
+        \`
+      `,
+      errors: [
+        buildError([3, 33], [3, 34], 'A space is required after \',\'.'),
+        buildError([4, 30], [4, 30], 'A space is required after \'{\'.'),
+        buildError([4, 40], [4, 40], 'A space is required before \'}\'.'),
+      ],
+    },
+  },
 ]
 
-const extractCase = (items, type) => items.map(item => ({
+const extractCase = type => item => ({
   options: item.options || [],
   ...item[type],
-}))
+})
+
+const extractCases = type => (items) => {
+  if (items.some(item => item.only)) {
+    return items.filter(item => item.only).map(extractCase(type))
+  }
+
+  return items.map(extractCase(type))
+}
 
 ruleTester.run('rule "eslint"', rule, {
-  valid: extractCase(cases, 'valid'),
-  invalid: extractCase(cases, 'invalid'),
+  valid: extractCases('valid')(cases),
+  invalid: extractCases('invalid')(cases),
 })
