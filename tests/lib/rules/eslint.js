@@ -146,6 +146,7 @@ const cases = [
   {
     name: 'Multi line attribute',
     options: [{
+      'object-curly-spacing': ['error', 'always'],
       'comma-dangle': ['error', 'always-multiline'],
       indent: ['error', 2],
     }],
@@ -153,6 +154,8 @@ const cases = [
       code: `
         pug\`
           div(
+
+            data={ bool: true }
             className={
               test: true,
               selected: false,
@@ -165,6 +168,8 @@ const cases = [
       code: `
         pug\`
           div(
+
+            data={bool: true}
             className={
               test: true,
                selected: false
@@ -173,8 +178,10 @@ const cases = [
         \`
       `,
       errors: [
-        buildError([6, 13], [6, 16], 'Expected indentation of 2 spaces but found 3.'),
-        buildError([6, 13], [6, 31], 'Missing trailing comma.'),
+        buildError([5, 18], [5, 30], 'A space is required after \'{\'.'),
+        buildError([5, 18], [5, 30], 'A space is required before \'}\'.'),
+        buildError([8, 13], [8, 16], 'Expected indentation of 2 spaces but found 3.'),
+        buildError([8, 13], [8, 31], 'Missing trailing comma.'),
       ],
     },
   },
