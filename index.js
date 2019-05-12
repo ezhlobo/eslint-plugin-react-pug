@@ -5,6 +5,7 @@
 /* eslint-disable global-require */
 const allRules = {
   'empty-lines': require('./lib/rules/empty-lines'),
+  eslint: require('./lib/rules/eslint'),
   indent: require('./lib/rules/indent'),
   'no-broken-template': require('./lib/rules/no-broken-template'),
   'no-interpolation': require('./lib/rules/no-interpolation'),
@@ -24,6 +25,7 @@ module.exports = {
       },
       rules: {
         'react-pug/empty-lines': 2,
+        'react-pug/eslint': 2,
         'react-pug/indent': 2,
         'react-pug/no-broken-template': 2,
         'react-pug/no-undef': 2,
