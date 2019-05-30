@@ -9,6 +9,7 @@
 
 const eslint = require('eslint')
 const buildError = require('../../../lib/util/testBuildError')
+const buildCases = require('../../../lib/util/testBuildCases')
 
 const { RuleTester } = eslint
 
@@ -25,74 +26,97 @@ const parserOptions = {
 
 const ruleTester = new RuleTester({ parserOptions })
 
-ruleTester.run('rule "pug-lint"', rule, {
-  valid: [
-    {
+const cases = [
+  {
+    name: 'Attribute separator, single line',
+    options: [{
+      validateAttributeSeparator: {
+        separator: ' ',
+        multiLineSeparator: '\n  ',
+      },
+    }],
+    valid: {
       code: `
-        pug\`p(id="hello")\`;
+        const ref = 'hello'
+        pug\`
+          div(...spread bool variable=ref number=0 string="string" object={a:true} array=[1, 'second'])
+          div(
+            ...spread bool variable=ref number=0 string="string" object={a:true} array=[1, 'second']
+          )
+        \`
       `,
     },
-    {
-      options: [{
-        disallowIdAttributeWithStaticValue: true,
-      }],
+    invalid: {
       code: `
-        pug\`p#hello\`;
+        const ref = 'hello'
+        pug\`
+          div(...spread  bool  variable=ref  number=0  string="string"  object={a:true}  array=[1, 'second'])
+          div(
+            ...spread  bool  variable=ref  number=0  string="string"  object={a:true}  array=[1, 'second']
+          )
+        \`
       `,
+      errors: [
+        buildError([4, 24], [4, 24], 'Invalid attribute separator found'),
+        buildError([4, 30], [4, 30], 'Invalid attribute separator found'),
+        buildError([4, 44], [4, 44], 'Invalid attribute separator found'),
+        buildError([4, 54], [4, 54], 'Invalid attribute separator found'),
+        buildError([4, 71], [4, 71], 'Invalid attribute separator found'),
+        buildError([4, 88], [4, 88], 'Invalid attribute separator found'),
+        buildError([6, 22], [6, 22], 'Invalid attribute separator found'),
+        buildError([6, 28], [6, 28], 'Invalid attribute separator found'),
+        buildError([6, 42], [6, 42], 'Invalid attribute separator found'),
+        buildError([6, 52], [6, 52], 'Invalid attribute separator found'),
+        buildError([6, 69], [6, 69], 'Invalid attribute separator found'),
+        buildError([6, 86], [6, 86], 'Invalid attribute separator found'),
+      ],
     },
-  ],
-  invalid: [
-    {
-      options: [{
-        disallowIdAttributeWithStaticValue: true,
-      }],
+  },
+
+  {
+    only: true,
+    name: 'Attribute separator, multiline',
+    options: [{
+      validateAttributeSeparator: {
+        separator: ' ',
+        multiLineSeparator: '\n  ',
+      },
+    }],
+    valid: {
       code: `
         pug\`
-          p(id="hello")
-        \`;
+          div(
+            bool
+            variable=ref
+            number=0
+            string="string"
+            object={a:true}
+            array=[1, 'second']
+          )
+        \`
       `,
-      errors: [
-        buildError([3, 13], [3, 13], 'Static attribute "id" must be written as ID literal'),
-      ],
     },
-    {
-      options: [{
-        disallowIdAttributeWithStaticValue: true,
-      }],
+    invalid: {
       code: `
         pug\`
-          p(id="hello")
-          p(id="hello")
-        \`;
+          div(
+            ...props,
+            bool
+             variable=ref
+            , number=0
+            string="string"
+            object={a:true}
+            array=[1, 'second']
+          )
+        \`
       `,
       errors: [
-        buildError([3, 13], [3, 13], 'Static attribute "id" must be written as ID literal'),
-        buildError([4, 13], [4, 13], 'Static attribute "id" must be written as ID literal'),
+        buildError([5, 9], [5, 9], 'Invalid attribute separator found'),
+        buildError([6, 10], [6, 10], 'Invalid attribute separator found'),
+        buildError([7, 10], [7, 10], 'Invalid attribute separator found'),
       ],
     },
-    {
-      options: [{
-        disallowIdAttributeWithStaticValue: true,
-      }],
-      code: `
-        pug\`p(id="hello")\`;
-      `,
-      errors: [
-        buildError([2, 16], [2, 16], 'Static attribute "id" must be written as ID literal'),
-      ],
-    },
-    {
-      options: [{
-        disallowIdAttributeWithStaticValue: true,
-      }],
-      code: `
-        pug\`p(id="hello")\`;
-        pug\`p(id="hello")\`;
-      `,
-      errors: [
-        buildError([2, 16], [2, 16], 'Static attribute "id" must be written as ID literal'),
-        buildError([3, 16], [3, 16], 'Static attribute "id" must be written as ID literal'),
-      ],
-    },
-  ],
-})
+  },
+]
+
+ruleTester.run('rule "pug-lint"', rule, buildCases(cases))
