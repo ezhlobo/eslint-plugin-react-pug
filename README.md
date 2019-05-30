@@ -2,7 +2,7 @@
 
 Add supporting of pugjs with react.
 
-[![npm version](https://img.shields.io/npm/v/eslint-plugin-react-pug.svg?longCache)](https://www.npmjs.com/package/eslint-plugin-react-pug) [![CI Status](https://img.shields.io/circleci/project/github/ezhlobo/eslint-plugin-react-pug/master.svg?longCache)](https://circleci.com/gh/ezhlobo/eslint-plugin-react-pug/tree/master) [![Greenkeeper badge](https://badges.greenkeeper.io/ezhlobo/eslint-plugin-react-pug.svg)](https://greenkeeper.io/)
+[![npm version](https://img.shields.io/npm/v/eslint-plugin-react-pug.svg?longCache)](https://www.npmjs.com/package/eslint-plugin-react-pug) [![CI Status](https://img.shields.io/circleci/project/github/ezhlobo/eslint-plugin-react-pug/master.svg?longCache)](https://circleci.com/gh/ezhlobo/eslint-plugin-react-pug/tree/master)
 
 It adds supporting of [babel-plugin-transform-react-pug](https://github.com/pugjs/babel-plugin-transform-react-pug).
 
@@ -53,6 +53,7 @@ Then configure the rules you want to use under the rules section.
 ## List of supported rules
 
 * [`react-pug/empty-lines`](./docs/rules/empty-lines.md): Manage empty lines in Pug
+* [`react-pug/eslint`](./docs/rules/eslint.md): Lint JavaScript code inside Pug
 * [`react-pug/indent`](./docs/rules/indent.md): Enforce consistent indentation
 * [`react-pug/no-broken-template`](./docs/rules/no-broken-template.md): Disallow broken template
 * [`react-pug/no-interpolation`](./docs/rules/no-interpolation.md): Disallow JavaScript interpolation
