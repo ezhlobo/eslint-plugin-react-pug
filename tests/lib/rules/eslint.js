@@ -9,6 +9,7 @@
 
 const eslint = require('eslint')
 const buildError = require('../../../lib/util/testBuildError')
+const buildCases = require('../../../lib/util/testBuildCases')
 
 const { RuleTester } = eslint
 
@@ -216,20 +217,4 @@ const cases = [
   },
 ]
 
-const extractCase = type => item => ({
-  options: item.options || [],
-  ...item[type],
-})
-
-const extractCases = type => (items) => {
-  if (items.some(item => item.only)) {
-    return items.filter(item => item.only).map(extractCase(type))
-  }
-
-  return items.map(extractCase(type))
-}
-
-ruleTester.run('rule "eslint"', rule, {
-  valid: extractCases('valid')(cases),
-  invalid: extractCases('invalid')(cases),
-})
+ruleTester.run('rule "eslint"', rule, buildCases(cases))
