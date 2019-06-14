@@ -34,7 +34,7 @@ describe('each rule', () => {
   describe('mentioned in README', () => {
     const listOfRulesInReadme = fs
       .readFileSync(path.resolve(__dirname, '..', 'README.md'), 'utf-8')
-      .match(/## List of supported rules\n+((\*.+\n+)+)/m)[1]
+      .match(/## List of supported rules\n+((\*.+\n+|^[^#]+)+)/m)[1]
       .split('\n')
       .filter(Boolean)
 
