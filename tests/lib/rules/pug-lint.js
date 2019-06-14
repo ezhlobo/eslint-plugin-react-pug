@@ -200,6 +200,20 @@ const cases = [
       ],
     },
   },
+
+  {
+    name: 'Pug-Lint can analyse invalid syntax',
+    options: [],
+    valid: {
+      code: `
+        const a = pug\`div(...props)\`
+      `,
+    },
+    invalid: {
+      code: '',
+      errors: [],
+    },
+  },
 ]
 
 ruleTester.run('rule "pug-lint"', rule, buildCases(cases))
