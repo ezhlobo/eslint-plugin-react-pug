@@ -116,9 +116,9 @@ const cases = [
         pug\`div Hello\`
       `,
       errors: [
-        buildError([5, 9], [5, 9], 'Invalid attribute separator found'),
-        buildError([6, 10], [6, 10], 'Invalid attribute separator found'),
-        buildError([7, 10], [7, 10], 'Invalid attribute separator found'),
+        buildError([5, 11], [5, 11], 'Invalid attribute separator found'),
+        buildError([6, 11], [6, 11], 'Invalid attribute separator found'),
+        buildError([7, 11], [7, 11], 'Invalid attribute separator found'),
       ],
     },
   },
@@ -134,6 +134,8 @@ const cases = [
           div
             div: div
         \`
+
+        pug\`p Hello\`
       `,
     },
     invalid: {
@@ -160,7 +162,41 @@ const cases = [
         buildError([4, 1], [4, 12], buildIndentationMessage(11)),
         buildError([8, 1], [8, 10], buildIndentationMessage(9)),
         buildError([12, 1], [12, 12], buildIndentationMessage(11)),
+        buildError([13, 1], [13, 13], buildIndentationMessage(12)),
         buildError([17, 1], [17, 14], buildIndentationMessage(13)),
+      ],
+    },
+  },
+
+  {
+    name: 'Spaces inside attribute brackets',
+    options: [{
+      disallowSpacesInsideAttributeBrackets: true,
+    }],
+    valid: {
+      code: `
+        export default () => pug\`
+          div(test)
+          div(
+            test
+          )
+        \`
+      `,
+    },
+    invalid: {
+      code: `
+        export default () => pug\`
+          div( test)
+          div(test )
+          div(
+            test
+           )
+        \`
+      `,
+      errors: [
+        buildError([3, 15], [3, 15], 'Illegal space after opening bracket'),
+        buildError([4, 20], [4, 20], 'Illegal space before closing bracket'),
+        buildError([7, 12], [7, 12], 'Illegal space before closing bracket'),
       ],
     },
   },
