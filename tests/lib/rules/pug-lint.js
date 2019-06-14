@@ -26,6 +26,10 @@ const parserOptions = {
 
 const ruleTester = new RuleTester({ parserOptions })
 
+const buildIndentationMessage = actual => (
+  `Invalid indentation, found "${actual}" spaces`
+)
+
 const cases = [
   {
     name: 'Attribute separator, single line',
@@ -74,7 +78,6 @@ const cases = [
   },
 
   {
-    only: true,
     name: 'Attribute separator, multiline',
     options: [{
       validateAttributeSeparator: {
@@ -109,11 +112,55 @@ const cases = [
             array=[1, 'second']
           )
         \`
+
+        pug\`div Hello\`
       `,
       errors: [
         buildError([5, 9], [5, 9], 'Invalid attribute separator found'),
         buildError([6, 10], [6, 10], 'Invalid attribute separator found'),
         buildError([7, 10], [7, 10], 'Invalid attribute separator found'),
+      ],
+    },
+  },
+
+  {
+    name: 'Indentation',
+    options: [{
+      validateIndentation: 2,
+    }],
+    valid: {
+      code: `
+        export default () => pug\`
+          div
+            div: div
+        \`
+      `,
+    },
+    invalid: {
+      code: `
+        export default () => pug\`
+          div
+           div
+        \`
+
+        const test = pug\`
+         div
+        \`
+
+        pug\`
+           div
+            p
+        \`
+
+          pug\`
+             div
+          \`
+      `,
+      errors: [
+        buildError([4, 1], [4, 12], buildIndentationMessage(11)),
+        buildError([8, 1], [8, 10], buildIndentationMessage(9)),
+        buildError([12, 1], [12, 12], buildIndentationMessage(11)),
+        buildError([17, 1], [17, 14], buildIndentationMessage(13)),
       ],
     },
   },
