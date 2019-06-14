@@ -61,3 +61,7 @@ Then configure the rules you want to use under the rules section.
 * [`react-pug/quotes`](./docs/rules/quotes.md): Manage quotes in Pug
 * [`react-pug/uses-react`](./docs/rules/uses-react.md): Prevent React to be marked as unused
 * [`react-pug/uses-vars`](./docs/rules/uses-vars.md): Prevent variables used in Pug to be marked as unused
+
+Experimental:
+
+* [`react-pug/pug-lint`](./docs/rules/pug-lint.md): Inherit pug-lint to validate pug
