@@ -32,9 +32,7 @@ const cases = [
     valid: {
       code: `
         function Component(props) {
-          return pug\`
-            = props.name
-          \`
+          return props.name
         }
         Component.propTypes = { name: PropTypes.string }
       `,
