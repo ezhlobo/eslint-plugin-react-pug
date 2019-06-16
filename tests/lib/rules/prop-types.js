@@ -16,11 +16,8 @@ const { RuleTester } = eslint
 const rule = require('../../../lib/rules/prop-types')
 
 const parserOptions = {
-  ecmaVersion: 8,
+  ecmaVersion: 10 ,
   sourceType: 'module',
-  ecmaFeatures: {
-    experimentalObjectRestSpread: true,
-  },
 }
 
 //------------------------------------------------------------------------------
@@ -34,14 +31,24 @@ const buildUnusedMessage = name => `'${name}' PropType is defined but prop is ne
 const cases = [
   {
     name: 'Functional Component, Unused props',
-    valid: {
-      code: `
-        function Component(props) {
-          console.log(props.name)
-        }
-        Component.propTypes = { name: PropTypes.string }
-      `,
-    },
+    valid: [
+      {
+        code: `
+          function Component(props) {
+            console.log(props.name)
+          }
+          Component.propTypes = { name: PropTypes.string }
+        `,
+      },
+      {
+        code: `
+          function Component(props) {
+            console.log(props['name'])
+          }
+          Component.propTypes = { name: PropTypes.string }
+        `,
+      },
+    ],
     invalid: {
       code: `
         function Component(props) {
@@ -105,6 +112,44 @@ const cases = [
           buildError([6, 35], [6, 39], buildUnusedMessage('name')),
           buildError([6, 59], [6, 63], buildUnusedMessage('test')),
         ],
+      },
+    ],
+  },
+
+  {
+    name: 'Functional Component, Unused props, Pug',
+    valid: [
+      {
+        code: `
+          function Component({ Component, ...args }) {
+            pug\`
+              - const check = args [ 'name']
+              = args . test
+              div(inAttr=args.inAttr)
+              Component
+              if props.condition > 10
+                p nothing #{args.interpolation}
+              each item in props.list.toArray()
+                p nothing
+            \`
+
+            const { ...rest } = args
+
+            pug\`
+              = rest.extra
+            \`
+          }
+          Component.propTypes = {
+            name: PropTypes.string,
+            test: PropTypes.bool,
+            inAttr: PropTypes.string,
+            Component: PropTypes.node,
+            condition: PropTypes.number,
+            interpolation: PropTypes.string,
+            list: PropTypes.object,
+            extra: PropTypes.string,
+          }
+        `,
       },
     ],
   },
