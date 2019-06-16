@@ -16,7 +16,7 @@ const { RuleTester } = eslint
 const rule = require('../../../lib/rules/prop-types')
 
 const parserOptions = {
-  ecmaVersion: 10 ,
+  ecmaVersion: 10,
   sourceType: 'module',
 }
 
@@ -29,6 +29,22 @@ const ruleTester = new RuleTester({ parserOptions })
 const buildUnusedMessage = name => `'${name}' PropType is defined but prop is never used`
 
 const cases = [
+  {
+    name: 'Without Components',
+    valid: [
+      {
+        code: `
+          Component.propTypes = { test: PropTypes.string }
+        `,
+      },
+      {
+        code: `
+          pug\`p Hello\`
+        `,
+      },
+    ],
+  },
+
   {
     name: 'Functional Component, Unused props',
     valid: [
