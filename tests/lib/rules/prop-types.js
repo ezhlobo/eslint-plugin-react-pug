@@ -42,6 +42,11 @@ const cases = [
           pug\`p Hello\`
         `,
       },
+      {
+        code: `
+          export default function* () {}
+        `,
+      },
     ],
   },
 
