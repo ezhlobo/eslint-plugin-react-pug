@@ -29,6 +29,7 @@
     "@babel/parser": "^7.4.5",
     "@babel/traverse": "^7.4.5",
     "common-prefix": "^1.1.0",
+    "eslint-plugin-react": "*",
     "pug-lexer": "^4.0.0",
     "pug-lint": "^2.5.0",
     "pug-uses-variables": "^3.0.0"
@@ -38,6 +39,9 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
     "mocha": "^5.0.0"
+  },
+  "peerDependencies": {
+    "eslint-plugin-react": ">= 7"
   },
   "eslintConfig": {
     "extends": [

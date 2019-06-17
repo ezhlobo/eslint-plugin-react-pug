@@ -18,6 +18,9 @@ const rule = require('../../../lib/rules/prop-types')
 const parserOptions = {
   ecmaVersion: 10,
   sourceType: 'module',
+  ecmaFeatures: {
+    jsx: true,
+  },
 }
 
 //------------------------------------------------------------------------------
@@ -56,7 +59,8 @@ const cases = [
       {
         code: `
           function Component(props) {
-            console.log(props.name)
+            const test = props.name
+            return pug\`\`
           }
           Component.propTypes = { name: PropTypes.string }
         `,
@@ -64,24 +68,33 @@ const cases = [
       {
         code: `
           function Component(props) {
-            console.log(props['name'])
+            return pug\`= props[ 'name' ]\`
+          }
+          Component.propTypes = { name: PropTypes.string }
+        `,
+      },
+      {
+        code: `
+          function Component(props) {
+            return pug\`= props.name\`
           }
           Component.propTypes = { name: PropTypes.string }
         `,
       },
     ],
-    invalid: {
+    invalid: [{
       code: `
         function Component(props) {
           console.log(props)
+          return pug\`\`
         }
         Component.propTypes = { name: PropTypes.string, second: PropTypes.bool }
       `,
       errors: [
-        buildError([5, 33], [5, 37], buildUnusedMessage('name')),
-        buildError([5, 57], [5, 63], buildUnusedMessage('second')),
+        buildError([6, 39], [6, 55], buildUnusedMessage('name')),
+        buildError([6, 65], [6, 79], buildUnusedMessage('second')),
       ],
-    },
+    }],
   },
 
   {
@@ -92,7 +105,7 @@ const cases = [
           function Component(props) {
             const { name, ...rest } = props
 
-            console.log(rest.test)
+            return pug\`= rest.test\`
           }
           Component.propTypes = { name: PropTypes.string, test: PropTypes.bool }
         `,
@@ -103,9 +116,41 @@ const cases = [
             const { ...rest } = props
             const { ...secondRest } = rest
 
-            console.log(secondRest.name, rest.test)
+            return pug\`
+              = secondRest.name
+              = rest.test
+            \`
           }
           Component.propTypes = { name: PropTypes.string, test: PropTypes.bool }
+        `,
+      },
+      {
+        code: `
+          function Component(props) {
+            return pug\`div(...props)\`
+          }
+          Component.propTypes = { name: PropTypes.string }
+        `,
+      },
+      {
+        code: `
+          function Component(props) {
+            const rest = props
+            return pug\`div(...rest)\`
+          }
+          Component.propTypes = { name: PropTypes.string }
+        `,
+      },
+      {
+        code: `
+          function Component(props) {
+            const rest = props
+            return pug\`
+              = rest.name
+              = props.test
+            \`
+          }
+          Component.propTypes = { name: PropTypes.string, test: PropTypes.string }
         `,
       },
     ],
@@ -114,11 +159,12 @@ const cases = [
         code: `
           function Component(props) {
             const { name, ...rest } = props
+            return pug\`\`
           }
           Component.propTypes = { name: PropTypes.string, test: PropTypes.bool }
         `,
         errors: [
-          buildError([5, 59], [5, 63], buildUnusedMessage('test')),
+          buildError([6, 65], [6, 79], buildUnusedMessage('test')),
         ],
       },
       {
@@ -126,12 +172,27 @@ const cases = [
           function Component(props) {
             const { ...rest } = props
             const { ...secondRest } = rest
+            return pug\`\`
           }
           Component.propTypes = { name: PropTypes.string, test: PropTypes.bool }
         `,
         errors: [
-          buildError([6, 35], [6, 39], buildUnusedMessage('name')),
-          buildError([6, 59], [6, 63], buildUnusedMessage('test')),
+          buildError([7, 41], [7, 57], buildUnusedMessage('name')),
+          buildError([7, 65], [7, 79], buildUnusedMessage('test')),
+        ],
+      },
+      {
+        code: `
+          function Component(props) {
+            const rest = props
+            return pug\`
+              div(rest=rest props=props)
+            \`
+          }
+          Component.propTypes = { name: PropTypes.string }
+        `,
+        errors: [
+          buildError([8, 41], [8, 57], buildUnusedMessage('name')),
         ],
       },
     ],
@@ -142,21 +203,41 @@ const cases = [
     valid: [
       {
         code: `
+          function Component({ MyComponent }) {
+            return pug\`
+              div
+            \`
+          }
+          Component.propTypes = { MyComponent: PropTypes.node }
+        `,
+      },
+      {
+        code: `
+          function Component({ MyComponent, ...args }) {
+            return pug\`
+              div(...args)
+            \`
+          }
+          Component.propTypes = { MyComponent: PropTypes.node, test: PropTypes.bool }
+        `,
+      },
+      {
+        code: `
           function Component({ Component, ...args }) {
             pug\`
               - const check = args [ 'name']
               = args . test
               div(inAttr=args.inAttr)
               Component
-              if props.condition > 10
+              if args.condition > 10
                 p nothing #{args.interpolation}
-              each item in props.list.toArray()
+              each item in args.list.toArray()
                 p nothing
             \`
 
-            const { ...rest } = args
+            const rest = args
 
-            pug\`
+            return pug\`
               = rest.extra
             \`
           }
@@ -171,6 +252,22 @@ const cases = [
             extra: PropTypes.string,
           }
         `,
+      },
+    ],
+    invalid: [
+      {
+        code: `
+          const props = { test: true }
+          function Component(args) {
+            return pug\`
+              = props.test
+            \`
+          }
+          Component.propTypes = { test: PropTypes.bool }
+        `,
+        errors: [
+          buildError([8, 41], [8, 55], buildUnusedMessage('test')),
+        ],
       },
     ],
   },
