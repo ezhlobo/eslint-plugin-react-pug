@@ -54,6 +54,22 @@ const cases = [
   },
 
   {
+    name: 'Ignore Classes',
+    valid: [
+      {
+        code: `
+          class Test extends React.Component {
+            render() {
+              return pug\`\`
+            }
+          }
+          Test.propTypes = { test: PropTypes.bool }
+        `,
+      },
+    ],
+  },
+
+  {
     name: 'Functional Component, Unused props',
     valid: [
       {
