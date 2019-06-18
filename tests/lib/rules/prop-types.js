@@ -253,6 +253,15 @@ const cases = [
           }
         `,
       },
+      {
+        code: `
+          function Component() {
+            return pug\`
+              Box and me, which adds some space to use multiple Boxes separated by meanings
+            \`
+          }
+        `,
+      },
     ],
     invalid: [
       {

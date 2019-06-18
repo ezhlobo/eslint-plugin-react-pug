@@ -1208,10 +1208,10 @@ pug-runtime@^2.0.4:
   resolved "https://registry.yarnpkg.com/pug-runtime/-/pug-runtime-2.0.4.tgz#e178e1bda68ab2e8c0acfc9bced2c54fd88ceb58"
   integrity sha1-4XjhvaaKsujArPybztLFT9iM61g=
 
-pug-uses-variables@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/pug-uses-variables/-/pug-uses-variables-3.0.0.tgz#146b043c3a40768c47d097ef0357012f8966fa96"
-  integrity sha512-/VyEVw2iO7P9SIEFgNikbERLabH0Ub0SSj1qor6og/F98CYYHqTjnZCfofAZh7/RZG6t+nIY/wsTRgLW/klQAQ==
+pug-uses-variables@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/pug-uses-variables/-/pug-uses-variables-3.0.1.tgz#06f0485f0e05394a6cae3c7664aece460d17ffb8"
+  integrity sha512-Ia52Ip+pOZCPnUfX2EqpKKdT8piKcLazrHu3wh1KZDcvkoSiU3BvSOHCVfG+o4NJm/Cp0KzCGV53ejIrpepiIA==
   dependencies:
     "@babel/parser" "^7.3.2"
     "@babel/traverse" "^7.2.3"
