@@ -29,15 +29,15 @@
     "@babel/parser": "^7.3.2",
     "@babel/traverse": "^7.2.3",
     "common-prefix": "^1.1.0",
-    "pug-lexer": "^4.0.0",
+    "pug-lexer": "^4.1.0",
     "pug-lint": "^2.5.0",
-    "pug-uses-variables": "^3.0.0"
+    "pug-uses-variables": "^3.0.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1 || ^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
-    "mocha": "^5.0.0"
+    "mocha": "^6.1.4"
   },
   "eslintConfig": {
     "extends": [
