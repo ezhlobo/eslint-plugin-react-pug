@@ -278,6 +278,39 @@ const cases = [
           }
         `,
       },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              div
+                = props.children
+            \`
+          }
+          Component.propTypes = { children: PropTypes.node }
+        `,
+      },
+      {
+        code: `
+          function Component(props) {
+            if (props.one) {
+              return pug\`
+                div
+                  = props.two
+              \`
+            }
+
+            return pug\`
+              div
+                = props.three
+            \`
+          }
+          Component.propTypes = {
+            one: PropTypes.bool,
+            two: PropTypes.node,
+            three: PropTypes.node,
+          }
+        `,
+      },
     ],
     invalid: [
       {
@@ -293,6 +326,34 @@ const cases = [
         errors: [
           buildError([8, 41], [8, 55], buildUnusedMessage('test')),
         ],
+      },
+    ],
+  },
+
+  {
+    name: 'Variables, Unused props',
+    valid: [
+      {
+        code: `
+          const Component = (props) => {
+            return pug\`
+              div
+                = props.children
+            \`
+          }
+          Component.propTypes = { children: PropTypes.node }
+        `,
+      },
+      {
+        code: `
+          const Component = function (props) {
+            return pug\`
+              div
+                = props.children
+            \`
+          }
+          Component.propTypes = { children: PropTypes.node }
+        `,
       },
     ],
   },
