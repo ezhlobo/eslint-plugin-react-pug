@@ -212,6 +212,17 @@ const cases = [
           buildError([8, 41], [8, 57], buildUnusedMessage('name')),
         ],
       },
+      {
+        code: `
+          function Component(props) {
+            return pug\`div(...anything)\`
+          }
+          Component.propTypes = { name: PropTypes.string }
+        `,
+        errors: [
+          buildError([5, 41], [5, 57], buildUnusedMessage('name')),
+        ],
+      },
     ],
   },
 
@@ -436,6 +447,111 @@ const cases = [
         errors: [
           buildError([3, 31], [3, 35], buildMissingMessage('test')),
           buildError([6, 43], [6, 52], buildMissingMessage('Component')),
+        ],
+      },
+    ],
+  },
+
+  {
+    name: 'Nested variables',
+    valid: [
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              - props.map.a
+            \`
+          }
+          Component.propTypes = {
+            map: PropTypes.shape({
+              a: PropTypes.bool,
+            }),
+          }
+        `,
+      },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              - props.map.b
+              - props.map.c.a
+            \`
+          }
+          Component.propTypes = {
+            map: PropTypes.shape({
+              a: PropTypes.bool,
+              b: PropTypes.bool,
+              c: PropTypes.shape({
+                a: PropTypes.bool
+              }),
+            }),
+          }
+        `,
+      },
+      {
+        code: `
+          function Component(props) {
+            props.list.length;
+            props.list[1].test;
+            return pug\`
+              - props.listInPug.length
+              - props.listInPug[1].test
+            \`
+          }
+          Component.propTypes = {
+            list: PropTypes.arrayOf(PropTypes.shape({
+              test: PropTypes.bool,
+            })),
+            listInPug: PropTypes.arrayOf(PropTypes.shape({
+              test: PropTypes.bool,
+            }))
+          }
+        `,
+      },
+    ],
+    invalid: [
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              - props.map.b
+              - props.all.any
+            \`
+          }
+          Component.propTypes = {
+            map: PropTypes.shape({
+              a: PropTypes.bool,
+            }),
+            all: PropTypes.object,
+          }
+        `,
+        errors: [
+          buildError([4, 27], [4, 28], buildMissingMessage('map.b')),
+        ],
+      },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              - props.list.length
+              - props.list[1].a
+              - props.list[1].nope
+              - props.list[1].b.c
+              - props.list[1].b.nope
+            \`
+          }
+          Component.propTypes = {
+            list: PropTypes.arrayOf(PropTypes.shape({
+              a: PropTypes.bool,
+              b: PropTypes.shape({
+                c: PropTypes.bool,
+              }),
+            })),
+          }
+        `,
+        errors: [
+          buildError([6, 31], [6, 35], buildMissingMessage('list[].nope')),
+          buildError([8, 33], [8, 37], buildMissingMessage('list[].b.nope')),
         ],
       },
     ],
