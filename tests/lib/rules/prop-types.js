@@ -98,20 +98,67 @@ const cases = [
           Component.propTypes = { name: PropTypes.string }
         `,
       },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              div(
+                values = {
+                  item: props.name,
+                }
+              )
+            \`
+          }
+          Component.propTypes = { name: PropTypes.string }
+        `,
+      },
     ],
-    invalid: [{
-      code: `
-        function Component(props) {
-          console.log(props)
-          return pug\`\`
-        }
-        Component.propTypes = { name: PropTypes.string, second: PropTypes.bool }
-      `,
-      errors: [
-        buildError([6, 39], [6, 55], buildUnusedMessage('name')),
-        buildError([6, 65], [6, 79], buildUnusedMessage('second')),
-      ],
-    }],
+    invalid: [
+      {
+        code: `
+          function Component(props) {
+            console.log(props)
+            return pug\`\`
+          }
+          Component.propTypes = { name: PropTypes.string, second: PropTypes.bool }
+        `,
+        errors: [
+          buildError([6, 41], [6, 57], buildUnusedMessage('name')),
+          buildError([6, 67], [6, 81], buildUnusedMessage('second')),
+        ],
+      },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              div(
+                values = {
+                  item: props.name,
+                }
+              )
+            \`
+          }
+        `,
+        errors: [
+          buildError([6, 31], [6, 35], buildMissingMessage('name')),
+        ],
+      },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              div(
+                values = {  item: props.name
+                }
+              )
+            \`
+          }
+        `,
+        errors: [
+          buildError([5, 41], [5, 45], buildMissingMessage('name')),
+        ],
+      },
+    ],
   },
 
   {
