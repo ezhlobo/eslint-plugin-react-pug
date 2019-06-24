@@ -30,6 +30,7 @@ const parserOptions = {
 const ruleTester = new RuleTester({ parserOptions })
 
 const buildUnusedMessage = name => `'${name}' PropType is defined but prop is never used`
+const buildMissingMessage = name => `'${name}' is missing in props validation`
 
 const cases = [
   {
@@ -354,6 +355,88 @@ const cases = [
           }
           Component.propTypes = { children: PropTypes.node }
         `,
+      },
+    ],
+  },
+
+  {
+    name: 'Functional, Undefined props',
+    invalid: [
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              = props.test
+            \`
+          }
+        `,
+        errors: [
+          buildError([4, 23], [4, 27], buildMissingMessage('test')),
+        ],
+      },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              = props [ 'test' ]
+            \`
+          }
+        `,
+        errors: [
+          buildError([4, 25], [4, 31], buildMissingMessage('test')),
+        ],
+      },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              div(test=props.test)
+            \`
+          }
+        `,
+        errors: [
+          buildError([4, 30], [4, 34], buildMissingMessage('test')),
+        ],
+      },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              div(...props.test)
+            \`
+          }
+        `,
+        errors: [
+          buildError([4, 28], [4, 32], buildMissingMessage('test')),
+        ],
+      },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              div(props-test=props.test[props.key])
+            \`
+          }
+        `,
+        errors: [
+          buildError([4, 36], [4, 40], buildMissingMessage('test')),
+          buildError([4, 47], [4, 50], buildMissingMessage('key')),
+        ],
+      },
+      {
+        code: `
+          const Component = (props) => {
+            console.log(props.test)
+
+            return pug\`
+              = React.createElement(props.Component)
+            \`
+          }
+        `,
+        errors: [
+          buildError([3, 31], [3, 35], buildMissingMessage('test')),
+          buildError([6, 43], [6, 52], buildMissingMessage('Component')),
+        ],
       },
     ],
   },
