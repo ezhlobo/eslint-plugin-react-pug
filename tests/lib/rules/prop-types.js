@@ -574,6 +574,7 @@ const cases = [
         `,
         errors: [
           buildError([4, 27], [4, 28], buildMissingMessage('map.b')),
+          buildError([10, 18], [10, 32], buildUnusedMessage('map.a')),
         ],
       },
       {
@@ -599,6 +600,24 @@ const cases = [
         errors: [
           buildError([6, 31], [6, 35], buildMissingMessage('list[].nope')),
           buildError([8, 33], [8, 37], buildMissingMessage('list[].b.nope')),
+        ],
+      },
+      {
+        code: `
+          const Component = (props) => {
+            return pug\`
+              = props.a.b
+            \`
+          }
+          Component.propTypes = {
+            a: PropTypes.shape({
+              unused: PropTypes.bool,
+            }),
+          }
+        `,
+        errors: [
+          buildError([4, 25], [4, 26], buildMissingMessage('a.b')),
+          buildError([9, 23], [9, 37], buildUnusedMessage('a.unused')),
         ],
       },
     ],
