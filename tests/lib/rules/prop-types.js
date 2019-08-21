@@ -560,24 +560,12 @@ const cases = [
           function Component(props) {
             return pug\`
               each item in props.list
-                div(key=item.id)
-                  = item.test
-            \`
-          }
-          Component.propTypes = {
-            list: PropTypes.arrayOf(PropTypes.shape({
-              id: PropTypes.number,
-              test: PropTypes.bool,
-            })),
-          }
-        `,
-      },
-      {
-        code: `
-          function Component(props) {
-            return pug\`
-              each item in props.list
-                div(...item)
+                div
+                  div(key=item.id)
+                    = item.test
+                  div Hello
+
+              = item.test
             \`
           }
           Component.propTypes = {
