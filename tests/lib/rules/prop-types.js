@@ -555,6 +555,39 @@ const cases = [
           }
         `,
       },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              each item in props.list
+                div(key=item.id)
+                  = item.test
+            \`
+          }
+          Component.propTypes = {
+            list: PropTypes.arrayOf(PropTypes.shape({
+              id: PropTypes.number,
+              test: PropTypes.bool,
+            })),
+          }
+        `,
+      },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              each item in props.list
+                div(...item)
+            \`
+          }
+          Component.propTypes = {
+            list: PropTypes.arrayOf(PropTypes.shape({
+              id: PropTypes.number,
+              test: PropTypes.bool,
+            })),
+          }
+        `,
+      },
     ],
     invalid: [
       {
