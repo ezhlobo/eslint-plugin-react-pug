@@ -31,7 +31,7 @@ module.exports = {
         'react-pug/indent': 2,
         'react-pug/no-broken-template': 2,
         'react-pug/no-undef': 2,
-        'react-pug/prop-types': 0,
+        'react-pug/prop-types': 2,
         'react-pug/pug-lint': 2,
         'react-pug/no-interpolation': 2,
         'react-pug/quotes': 2,

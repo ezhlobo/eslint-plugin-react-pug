@@ -58,6 +58,7 @@ Then configure the rules you want to use under the rules section.
 * [`react-pug/no-broken-template`](./docs/rules/no-broken-template.md): Disallow broken template
 * [`react-pug/no-interpolation`](./docs/rules/no-interpolation.md): Disallow JavaScript interpolation
 * [`react-pug/no-undef`](./docs/rules/no-undef.md): Disallow undeclared variables in Pug
+* [`react-pug/prop-types`](./docs/rules/prop-types.md): Manage prop-types usage
 * [`react-pug/quotes`](./docs/rules/quotes.md): Manage quotes in Pug
 * [`react-pug/uses-react`](./docs/rules/uses-react.md): Prevent React to be marked as unused
 * [`react-pug/uses-vars`](./docs/rules/uses-vars.md): Prevent variables used in Pug to be marked as unused
