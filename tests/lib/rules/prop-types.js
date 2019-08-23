@@ -641,6 +641,31 @@ const cases = [
           buildError([9, 23], [9, 37], buildUnusedMessage('a.unused')),
         ],
       },
+      {
+        only: true,
+        code: `
+          function Component(props) {
+            const id = true
+
+            return pug\`
+              each item in props.list
+                div
+                  div(key=item.id)
+                    = item.test
+                  div Hello
+
+              = item.test
+            \`
+          }
+          Component.propTypes = {
+            list: PropTypes.arrayOf(PropTypes.shape({})),
+          }
+        `,
+        errors: [
+          buildError([8, 32], [8, 34], buildMissingMessage('list[].id')),
+          buildError([9, 28], [9, 32], buildMissingMessage('list[].test')),
+        ],
+      },
     ],
   },
 ]
