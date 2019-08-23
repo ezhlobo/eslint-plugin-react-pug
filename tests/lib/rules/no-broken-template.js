@@ -48,6 +48,13 @@ ruleTester.run('rule "no-broken-template"', rule, {
         \`
       `,
     },
+    {
+      code: `
+        pug\`
+          button(type="button" ...props)
+        \`
+      `,
+    },
   ],
   invalid: [
     {
