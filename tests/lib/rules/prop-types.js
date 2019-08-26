@@ -576,6 +576,19 @@ const cases = [
           }
         `,
       },
+      {
+        code: `
+          function Component() {
+            const list = []
+
+            return pug\`
+              each item in list
+                div(key=item.id)
+                  = item.test
+            \`
+          }
+        `,
+      },
     ],
     invalid: [
       {
@@ -642,7 +655,6 @@ const cases = [
         ],
       },
       {
-        only: true,
         code: `
           function Component(props) {
             const id = true
