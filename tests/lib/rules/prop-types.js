@@ -642,7 +642,6 @@ const cases = [
         ],
       },
       {
-        only: true,
         code: `
           function Component(props) {
             const id = true
