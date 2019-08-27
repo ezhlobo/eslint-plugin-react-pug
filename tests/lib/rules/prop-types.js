@@ -457,6 +457,7 @@ const cases = [
         ],
       },
       {
+        only: true,
         code: `
           function Component(props) {
             return pug\`
@@ -586,6 +587,21 @@ const cases = [
                 div(key=item.id)
                   = item.test
             \`
+          }
+        `,
+      },
+      {
+        only: true,
+        code: `
+          const Component = props => pug\`
+            //-= props.test
+            div(...props.style)
+          \`
+          Component.propTypes = {
+            // test: PropTypes.string,
+            style: PropTypes.shape({
+              anything: PropTypes.string,
+            })
           }
         `,
       },
