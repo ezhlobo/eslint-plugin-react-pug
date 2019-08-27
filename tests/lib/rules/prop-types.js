@@ -457,7 +457,6 @@ const cases = [
         ],
       },
       {
-        only: true,
         code: `
           function Component(props) {
             return pug\`
@@ -591,17 +590,16 @@ const cases = [
         `,
       },
       {
-        only: true,
         code: `
           const Component = props => pug\`
-            //-= props.test
+            = props.test
             div(...props.style)
           \`
           Component.propTypes = {
-            // test: PropTypes.string,
+            test: PropTypes.string,
             style: PropTypes.shape({
-              anything: PropTypes.string,
-            })
+              one: PropTypes.string,
+            }),
           }
         `,
       },
@@ -692,6 +690,21 @@ const cases = [
         errors: [
           buildError([8, 32], [8, 34], buildMissingMessage('list[].id')),
           buildError([9, 28], [9, 32], buildMissingMessage('list[].test')),
+        ],
+      },
+      {
+        code: `
+          const Component = props => pug\`
+            = props['style']
+          \`
+          Component.propTypes = {
+            style: PropTypes.shape({
+              one: PropTypes.string,
+            }),
+          }
+        `,
+        errors: [
+          buildError([7, 20], [7, 36], buildUnusedMessage('style.one')),
         ],
       },
     ],
