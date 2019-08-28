@@ -589,6 +589,20 @@ const cases = [
           }
         `,
       },
+      {
+        code: `
+          const Component = props => pug\`
+            = props.test
+            div(...props.style)
+          \`
+          Component.propTypes = {
+            test: PropTypes.string,
+            style: PropTypes.shape({
+              one: PropTypes.string,
+            }),
+          }
+        `,
+      },
     ],
     invalid: [
       {
@@ -676,6 +690,84 @@ const cases = [
         errors: [
           buildError([8, 32], [8, 34], buildMissingMessage('list[].id')),
           buildError([9, 28], [9, 32], buildMissingMessage('list[].test')),
+        ],
+      },
+      {
+        code: `
+          const Component = props => pug\`
+            = props['style']
+          \`
+          Component.propTypes = {
+            style: PropTypes.shape({
+              one: PropTypes.string,
+            }),
+          }
+        `,
+        errors: [
+          buildError([7, 20], [7, 36], buildUnusedMessage('style.one')),
+        ],
+      },
+      {
+        code: `
+          const Component = props => pug\`
+            each item in props.list
+              div(key=item.id)
+                div(
+                  ...item
+                )
+          \`
+          Component.propTypes = {
+            list: PropTypes.arrayOf(PropTypes.shape({
+              anything: PropTypes.string,
+            })),
+          }
+        `,
+        errors: [
+          buildError([4, 28], [4, 30], buildMissingMessage('list[].id')),
+          buildError([11, 25], [11, 41], buildUnusedMessage('list.*.anything')),
+        ],
+      },
+    ],
+  },
+
+  {
+    name: 'Used main props inside iterations',
+    valid: [
+      {
+        code: `
+          const Component = props => pug\`
+            each item in props.list
+              div(key=item.id)
+                div(
+                  ...item
+                  another=props.test
+                )
+          \`
+          Component.propTypes = {
+            list: PropTypes.arrayOf(PropTypes.shape({
+              id: PropTypes.string,
+            })),
+            test: PropTypes.bool,
+          }
+        `,
+      },
+    ],
+    invalid: [
+      {
+        code: `
+          const Component = props => pug\`
+            each item in props.list
+              div(key=item.id)
+                div(
+                  ...item
+                  another=props.test
+                )
+          \`
+        `,
+        errors: [
+          buildError([3, 32], [3, 36], buildMissingMessage('list')),
+          buildError([4, 28], [4, 30], buildMissingMessage('list[].id')),
+          buildError([7, 33], [7, 37], buildMissingMessage('test')),
         ],
       },
     ],
