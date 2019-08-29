@@ -603,6 +603,22 @@ const cases = [
           }
         `,
       },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              each item in props.list
+                each inside in item
+                  = inside.a
+            \`
+          }
+          Component.propTypes = {
+            list: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({
+              a: PropTypes.test,
+            })))
+          }
+        `,
+      },
     ],
     invalid: [
       {
@@ -725,6 +741,45 @@ const cases = [
         errors: [
           buildError([4, 28], [4, 30], buildMissingMessage('list[].id')),
           buildError([11, 25], [11, 41], buildUnusedMessage('list.*.anything')),
+        ],
+      },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              each item in props.list
+                each inside in item
+                  each second in inside
+                    = second.a
+            \`
+          }
+          Component.propTypes = {
+            list: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({}))))
+          }
+        `,
+        errors: [
+          buildError([7, 30], [7, 31], buildMissingMessage('list[][][].a')),
+        ],
+      },
+      {
+        code: `
+          function Component(props) {
+            return pug\`
+              each item in props.list
+                each inside in item
+                  each second in inside
+                    = second.a
+            \`
+          }
+          Component.propTypes = {
+            list: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({
+              a: PropTypes.string,
+              b: PropTypes.string,
+            }))))
+          }
+        `,
+        errors: [
+          buildError([13, 18], [13, 34], buildUnusedMessage('list.*.*.*.b')),
         ],
       },
     ],
