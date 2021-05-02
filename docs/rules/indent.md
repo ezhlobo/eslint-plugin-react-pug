@@ -2,7 +2,12 @@
 
 This helps to be consistent with using indentation across the codebase.
 
-Basically it requires 2 spaces always.
+Default is 2 spaces and can be changed with
+```
+"rules": {
+  "react-pug/indent": ["error", 4]
+},
+```
 
 ## Rule Details
 
